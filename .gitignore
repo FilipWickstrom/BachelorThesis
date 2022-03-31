@@ -14,7 +14,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+#*.dll	We want to save the SFML-dlls
 
 # Fortran module files
 *.mod
@@ -24,7 +24,7 @@
 *.lai
 *.la
 *.a
-*.lib
+#*.lib	We want to save the SFML-libs
 
 # Executables
 *.exe
