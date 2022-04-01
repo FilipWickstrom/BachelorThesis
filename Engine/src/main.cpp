@@ -1,5 +1,9 @@
 #include "PCH.h"
 
+#define OOD
+
+
+#ifdef OOD
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!");
@@ -22,3 +26,6 @@ int main()
 
     return 0;
 }
+#elif defined DOD
+
+#endif
