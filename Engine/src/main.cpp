@@ -1,6 +1,8 @@
 #include "PCH.h"
 
 #define OOD
+//#define DOD
+//#define MULTDOD
 
 
 #ifdef OOD
