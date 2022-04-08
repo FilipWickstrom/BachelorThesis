@@ -40,3 +40,8 @@
 #include <SFMLTon.h>
 
 //Paths
+
+
+// type defs
+typedef unsigned int uint;
+typedef sf::Vector2f vec2;
