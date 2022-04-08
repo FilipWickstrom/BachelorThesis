@@ -2,29 +2,30 @@
 
 #define OOD
 //#define DOD
-//#define MULTDOD
 
 
 #ifdef OOD
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!");
+    //sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
-    while (window.isOpen())
+    while (SFMLTon::GetWindow().isOpen())
     {
         sf::Event event;
-        while (window.pollEvent(event))
+        while (SFMLTon::GetWindow().pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                window.close();
+                SFMLTon::GetWindow().close();
         }
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        SFMLTon::GetWindow().clear();
+        SFMLTon::GetWindow().draw(shape);
+        SFMLTon::GetWindow().display();
     }
+
+    SFMLTon::GetWindow().close();
 
     return 0;
 }

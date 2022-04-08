@@ -42,7 +42,7 @@ project "Game"
 	}
 
     vpaths {
-		--["Singletons"]		= { "**Something.*" },
+		["Singletons"]		= { "**SFMLTon.*" },
 		
     }
 

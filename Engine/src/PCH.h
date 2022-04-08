@@ -37,6 +37,6 @@
 
 
 //Singletons if needed
-
+#include <SFMLTon.h>
 
 //Paths
