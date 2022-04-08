@@ -4,6 +4,7 @@ project "Game"
     staticruntime "on"
     targetdir("build/bin/" .. outputdir)
     objdir("build/bin-int/" .. outputdir)
+	openmp "On"
 
 	
 	-- Define the location of pre-compiled header.
