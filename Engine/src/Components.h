@@ -1,5 +1,14 @@
 #pragma once
 
+enum class Tags : uint
+{
+	DEFAULT,
+	GOOD,
+	BAD
+};
+
+// COMPONENTS
+
 struct Transform
 {
 	// Position
@@ -9,6 +18,30 @@ struct Transform
 	// Scale
 	vec2 scale;
 };
+
+struct Color
+{
+	sf::Color color = sf::Color::Blue;
+};
+
+struct Collider
+{
+
+};
+
+struct Value
+{
+	int worth;
+};
+
+struct Tag
+{
+	Tags tag = Tags::DEFAULT;
+};
+
+
+
+// END OF COMPONENTS
 
 
 // Components Classes
