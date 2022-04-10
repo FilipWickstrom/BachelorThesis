@@ -14,6 +14,7 @@
 #include <exception>
 #include <set>
 #include <bitset>
+#include <cassert>
 // Add more if needed
 
 
@@ -37,3 +38,14 @@
 // type defs
 typedef unsigned int uint;
 typedef sf::Vector2f vec2;
+
+
+// ECS
+using Entity = std::uint32_t;
+using ComponentType = std::uint8_t;
+
+const ComponentType MAX_COMPONENTS = 32;
+using Signature = std::bitset<MAX_COMPONENTS>;
+const Entity MAX_ENTITIES = 5000;
+
+
