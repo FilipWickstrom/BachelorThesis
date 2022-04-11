@@ -3,8 +3,9 @@
 enum class Tags : uint
 {
 	DEFAULT,
+	PLAYER,
 	GOOD,
-	BAD
+	BAD,
 };
 
 // COMPONENTS
@@ -12,31 +13,43 @@ enum class Tags : uint
 struct Transform
 {
 	// Position
-	vec2 pos;
+	vec2 pos = {rand() % 10000 - 5000, rand() % 10000 - 5000};
 	// Velocity
-	vec2 velo;
+	vec2 velo = {rand() % 32 - 16, rand() % 32 - 16};
 	// Scale
-	vec2 scale;
+	vec2 scale = {10.0f, 10.0f};
 };
 
 struct Color
 {
 	sf::Color color = sf::Color::Blue;
+
+	Color() = default;
+	Color(const sf::Color& color)
+	{
+		this->color = color;
+	}
 };
 
 struct Collider
 {
-
+	uint8_t isCollide;
 };
 
 struct Value
 {
-	int worth;
+	int worth = 0;
 };
 
 struct Tag
 {
-	Tags tag = Tags::DEFAULT;
+	Tags tag = Tags::PLAYER;
+
+	Tag() = default;
+	Tag(const Tags& tag)
+	{
+		this->tag = tag;
+	}
 };
 
 
@@ -160,6 +173,16 @@ public:
 		m_componentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
 
 		m_nextComponentType++;
+	}
+
+	template<typename T>
+	ComponentType GetComponentType()
+	{
+		const char* typeName = typeid(T).name();
+
+		assert(m_componentTypes.find(typeName) != m_componentTypes.end() && "Component doesn't exist.");
+
+		return m_componentTypes[typeName];
 	}
 
 	template<typename T>

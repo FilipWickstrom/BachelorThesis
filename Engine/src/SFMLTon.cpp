@@ -3,7 +3,10 @@
 
 SFMLTon::SFMLTon()
 {
-	m_window.create(sf::VideoMode(1600, 900), "SFML works!");
+	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SFML works!");
+	//m_view.setViewport({ 1.0f, 1.0f, 1.0f, 1.0f });
+	m_view.setSize({ WINDOW_WIDTH, WINDOW_HEIGHT });
+	//m_window.setView(m_view);
 }
 
 auto& SFMLTon::Get()
@@ -15,4 +18,9 @@ auto& SFMLTon::Get()
 sf::RenderWindow& SFMLTon::GetWindow()
 {
 	return Get().m_window;
+}
+
+sf::View& SFMLTon::GetView()
+{
+	return Get().m_view;
 }

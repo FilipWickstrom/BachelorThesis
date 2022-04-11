@@ -44,7 +44,8 @@ project "Game"
 
     vpaths {
 		["Singletons"]		= { "**SFMLTon.*" },
-		["ECS"] 			= {"**Components.*", "**EntityManager.*", "**System.*"}
+		["ECS"] 			= {"**Components.*", "**EntityManager.*", "**System.*", "**Coordinator.*"},
+		["Game"]			= {"**Game.*"}
     }
 
     filter {"system:windows"}
