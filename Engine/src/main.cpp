@@ -1,32 +1,38 @@
 #include "PCH.h"
+#include "Game.h"
 
 #define OOD
 //#define DOD
 
-
 #ifdef OOD
 int main()
 {
-    //sf::RenderWindow window(sf::VideoMode(1600, 900), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    srand(static_cast<unsigned int>(time(0)));
+    sf::Clock clock;
 
-    while (SFMLTon::GetWindow().isOpen())
+    //Init all gameobjects
+    Game game;
+
+    while (WINDOW.isOpen())
     {
+        float dt = clock.getElapsedTime().asSeconds();
+        //std::cout << "DT: " << 1.f / dt << std::endl;
+        clock.restart();
+
         sf::Event event;
-        while (SFMLTon::GetWindow().pollEvent(event))
+        while (WINDOW.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
-                SFMLTon::GetWindow().close();
+                WINDOW.close();
         }
 
-        SFMLTon::GetWindow().clear();
-        SFMLTon::GetWindow().draw(shape);
-        SFMLTon::GetWindow().display();
+        //Benchmark start
+        game.Update(dt);
+        //Benchmark end
+        game.Render();
     }
 
-    SFMLTon::GetWindow().close();
-
+    WINDOW.close();
     return 0;
 }
 #elif defined DOD

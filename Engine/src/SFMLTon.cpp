@@ -3,7 +3,9 @@
 
 SFMLTon::SFMLTon()
 {
-	m_window.create(sf::VideoMode(1600, 900), "SFML works!");
+	m_window.create(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "Thesis: OOD vs DOD vs DOD-MT");
+	m_camera.setCenter(WIN_WIDTH / 2.f, WIN_HEIGHT / 2.f);
+	m_camera.setSize(WIN_WIDTH, WIN_HEIGHT);
 }
 
 auto& SFMLTon::Get()
@@ -15,4 +17,9 @@ auto& SFMLTon::Get()
 sf::RenderWindow& SFMLTon::GetWindow()
 {
 	return Get().m_window;
+}
+
+sf::View& SFMLTon::GetCamera()
+{
+	return Get().m_camera;
 }

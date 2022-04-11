@@ -45,6 +45,8 @@ project "Game"
     vpaths {
 		["Singletons"]		= { "**SFMLTon.*" },
 		
+		["Objects"]			= { "**Object.*"},
+		
     }
 
     filter {"system:windows"}

@@ -14,6 +14,7 @@
 #include <exception>
 #include <set>
 #include <bitset>
+#include <time.h>
 // Add more if needed
 
 
@@ -30,10 +31,19 @@
 #include <SFML/GpuPreference.hpp>
 
 
-// Singletons if needed
-#include "SFMLTon.h"
-
-
 // type defs
 typedef unsigned int uint;
 typedef sf::Vector2f vec2;
+
+// Singletons if needed
+#include "SFMLTon.h"
+#define WINDOW SFMLTon::GetWindow()
+
+// Other necessary stuff that is needed everywhere
+#include "Structures.h"
+
+// Constants
+constexpr uint WIN_WIDTH		= 1920;
+constexpr uint WIN_HEIGHT		= 1080;
+constexpr uint NR_OF_ENEMIES	= 100;
+constexpr uint NR_OF_FOOD		= 100;
