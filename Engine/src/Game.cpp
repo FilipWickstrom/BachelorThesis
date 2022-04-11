@@ -16,6 +16,7 @@ void Game::Init()
 
     m_renderSystem = Coordinator::RegisterSystem<RenderSystem>();
     m_movementSystem = Coordinator::RegisterSystem<MovementSystem>();
+    m_collisionSystem = Coordinator::RegisterSystem<CollisionSystem>();
 
     Signature rendSignature;
     rendSignature.set(Coordinator::GetComponentType<Transform>());
@@ -28,14 +29,20 @@ void Game::Init()
     moveSignature.set(Coordinator::GetComponentType<Tag>());
     Coordinator::SetSystemSignature<MovementSystem>(moveSignature);
 
+    Signature collSignature;
+    collSignature.set(Coordinator::GetComponentType<Transform>());
+    collSignature.set(Coordinator::GetComponentType<Tag>());
+    Coordinator::SetSystemSignature<CollisionSystem>(collSignature);
+
     m_entities.resize(MAX_ENTITIES);
 
     Entity player = Coordinator::CreateEntity();
     Coordinator::AddComponent(player, Transform());
     Coordinator::AddComponent(player, Tag(Tags::PLAYER));
     Coordinator::AddComponent(player, Color(sf::Color::Blue));
-    Coordinator::AddComponent(player, Value());
+    Coordinator::AddComponent(player, Value(1));
     m_entities[0] = player;
+    m_playerEntity = player;
 
     for (Entity entity = 1; entity < MAX_ENTITIES; entity++)
     {
@@ -54,6 +61,7 @@ void Game::Init()
             Coordinator::AddComponent(entity, Color(sf::Color::Green));
         }
 
+        Coordinator::AddComponent(entity, Value(1));
         m_entities[entity] = entity;
     }
 }
@@ -62,9 +70,11 @@ void Game::Init()
 
 void Game::Update(const float& dt)
 {
+    m_collisionSystem.get()->Detect(m_playerEntity);
     m_movementSystem.get()->Update(dt);
 
-    //std::cout << dt << "\n";
+    m_collisionSystem.get()->Act();
+    std::cout << dt << "\n";
 }
 
 void Game::Draw()
@@ -74,4 +84,6 @@ void Game::Draw()
     m_renderSystem.get()->Draw();
 
     SFMLTon::GetWindow().display();
+
+    SFMLTon::GetWindow().setTitle("Score: " + std::to_string(Coordinator::GetComponent<Value>(m_playerEntity).worth));
 }

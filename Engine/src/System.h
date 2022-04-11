@@ -91,10 +91,18 @@ class CollisionSystem : public System
 {
 private:
 
-	std::vector<Entity> m_collisions;
+	struct CollInfo
+	{
+		Entity first;
+		Entity second;
+	};
+
+	std::vector<CollInfo> m_collisions;
 
 public:
 
-	void Detect();
+	CollisionSystem();
+
+	void Detect(const Entity& playerEntity);
 	void Act();
 };

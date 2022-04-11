@@ -80,21 +80,65 @@ void RenderSystem::Draw()
 	}
 }
 
-static sf::FloatRect first;
-static sf::FloatRect second;
+static sf::CircleShape firstShape(1.0f);
+static sf::CircleShape secondShape(1.0f);
 
-void CollisionSystem::Detect()
+CollisionSystem::CollisionSystem()
 {
+	m_collisions.resize(MAX_ENTITIES);
+}
+
+void CollisionSystem::Detect(const Entity& playerEntity)
+{
+	auto& playerTransf = Coordinator::GetComponent<Transform>(playerEntity);
+	firstShape.setScale(playerTransf.scale);
+	firstShape.setPosition(playerTransf.pos);
+
 	for (auto const& entity : m_entities)
 	{
+		auto& otherTransf = Coordinator::GetComponent<Transform>(entity);
 
+		if (playerEntity != entity)
+		{
+			secondShape.setScale(otherTransf.scale);
+			secondShape.setPosition(otherTransf.pos);
+
+			if (firstShape.getGlobalBounds().intersects(secondShape.getGlobalBounds()))
+				m_collisions.push_back({ playerEntity, entity });
+		}
 	}
 }
 
 void CollisionSystem::Act()
 {
-	for (auto const& entity : m_collisions)
+	while (m_collisions.size() > 0)
 	{
+		const CollInfo& info = m_collisions[(int)m_collisions.size() - 1];
 
+		auto& playerTransf = Coordinator::GetComponent<Transform>(info.first);
+		Value& playerValue = Coordinator::GetComponent<Value>(info.first);
+		Tag& tagOther = Coordinator::GetComponent<Tag>(info.second);
+
+		switch (tagOther.tag)
+		{
+		case Tags::GOOD:
+		{
+			playerValue.worth++;
+			Coordinator::DestroyEntity(info.second);
+			break;
+		}
+		case Tags::BAD:
+		{
+			playerValue.worth = 1;
+			break;
+		}
+		default:
+			break;
+		}
+
+		playerTransf.scale.x = playerValue.worth;
+		playerTransf.scale.y = playerValue.worth;
+
+		m_collisions.pop_back();
 	}
 }

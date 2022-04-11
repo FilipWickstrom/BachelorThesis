@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Tags : uint
+enum class Tags : uint8_t
 {
 	DEFAULT,
 	PLAYER,
@@ -38,7 +38,12 @@ struct Collider
 
 struct Value
 {
-	int worth = 0;
+	int worth = 1;
+	Value() = default;
+	Value(int wort)
+	{
+		worth = wort;
+	}
 };
 
 struct Tag
@@ -51,7 +56,6 @@ struct Tag
 		this->tag = tag;
 	}
 };
-
 
 
 // END OF COMPONENTS
