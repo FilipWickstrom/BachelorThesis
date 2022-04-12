@@ -7,7 +7,7 @@ void MovementSystem::Update(const float& dt, Coordinator& coord)
 {
 	for (auto const& entity : m_entities)
 	{
-		auto& transform = coord.GetComponent<Transform>(entity);
+		
 		auto& rigidbody = coord.GetComponent<RigidBody>(entity);
 		const auto& tag = coord.GetComponent<Tag>(entity);
 
@@ -32,6 +32,7 @@ void MovementSystem::Update(const float& dt, Coordinator& coord)
 			break;
 		}
 
+		auto& transform = coord.GetComponent<Transform>(entity);
 		transform.pos.x += rigidbody.velo.x * dt;
 		transform.pos.y += rigidbody.velo.y * dt;
 	}
