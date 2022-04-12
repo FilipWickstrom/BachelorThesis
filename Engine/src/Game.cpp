@@ -76,17 +76,15 @@ void Game::Update(const float& dt)
 
     m_collisionSystem.get()->Act();
 
-    std::cout << "FPS: " << 1.0f / dt << "\n";
-
-    if (Coordinator::GetComponent<Value>(m_playerEntity).worth > 25)
-    {
-        Coordinator::DestroyEntity(m_playerEntity);
-        SFMLTon::GetWindow().setTitle("YOU WON!");
-    }
-    else
-    {
-        SFMLTon::GetWindow().setTitle("Score: " + std::to_string(Coordinator::GetComponent<Value>(m_playerEntity).worth) + " FPS: " + std::to_string(1.0f / dt));
-    }
+    //if (Coordinator::GetComponent<Value>(m_playerEntity).worth > 25)
+    //{
+    //    Coordinator::DestroyEntity(m_playerEntity);
+    //    SFMLTon::GetWindow().setTitle("YOU WON!");
+    //}
+    //else
+    //{
+    //    SFMLTon::GetWindow().setTitle("Score: " + std::to_string(Coordinator::GetComponent<Value>(m_playerEntity).worth) + " FPS: " + std::to_string(1.0f / dt));
+    //}
 }
 
 void Game::Draw()
