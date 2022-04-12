@@ -81,7 +81,7 @@ void Game::Init()
 
 void Game::Update(const float& dt)
 {
-    m_movementSystem->Update(m_coordinator, dt);
+    //m_movementSystem->Update(m_coordinator, dt);
 
     //m_collisionSystem.get()->Detect(m_playerEntity, m_coordinator);
     //m_collisionSystem.get()->Act(m_coordinator);
@@ -89,6 +89,27 @@ void Game::Update(const float& dt)
     const Renderable& playerTransf = m_coordinator.GetComponent<Renderable>(m_playerEntity);
     SFMLTon::GetView().setCenter(playerTransf.shape.getPosition());
     SFMLTon::GetWindow().setView(SFMLTon::GetView());
+
+    //for (Entity entity = 0; entity < MAX_ENTITIES; entity++)
+    //{
+    //    Transform& transf = m_coordinator.GetComponent<Transform>(entity);
+    //    transf.position.x += transf.velocity.x * dt;
+    //    transf.position.y += transf.velocity.y * dt;
+    //}
+
+    for (int i = 0; i < MAX_ENTITIES; i++)
+    {
+        Transform& transf = m_transforms[i];
+        transf.position.x += transf.velocity.x * dt;
+        transf.position.y += transf.velocity.y * dt;
+    }
+
+    for (int i = 0; i < MAX_ENTITIES; i++)
+    {
+        Transform& transf = m_transforms[i];
+        transf.position.x += transf.velocity.x * dt;
+        transf.position.y += transf.velocity.y * dt;
+    }
 }
 
 
@@ -97,7 +118,7 @@ void Game::Draw()
 {
     SFMLTon::GetWindow().clear();
 
-    m_renderSystem->Render(m_coordinator);
+    //m_renderSystem->Render(m_coordinator);
 
     SFMLTon::GetWindow().display();
 

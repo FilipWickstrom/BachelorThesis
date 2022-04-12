@@ -1,6 +1,7 @@
 #pragma once
 #include "System.hpp"
 #include "Coordinator.hpp"
+#include "Components.h"
 
 class Game
 {
@@ -12,6 +13,8 @@ private:
 	std::shared_ptr<RenderSystem> m_renderSystem;
 	std::shared_ptr<MovementSystem> m_movementSystem;
 	std::shared_ptr<CollisionSystem> m_collisionSystem;
+
+	std::array<Transform, MAX_ENTITIES> m_transforms;
 
 public:
 
