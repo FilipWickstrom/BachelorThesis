@@ -122,7 +122,11 @@ void CollisionSystem::Detect(const Entity& playerEntity)
 
 			// Collision Check
 			if (firstShape.getGlobalBounds().intersects(secondShape.getGlobalBounds()))
-					m_collisions.push_back({ entity, other });
+			{
+				coll1.hasCollided = 1;
+				coll2.hasCollided = 1;
+				m_collisions.push_back({ entity, other });
+			}
 		}
 	}
 
