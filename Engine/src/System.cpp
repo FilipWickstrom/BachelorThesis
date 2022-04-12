@@ -8,55 +8,51 @@ void MovementSystem::Update(const float& dt, Coordinator& coord)
 	for (auto const& entity : m_entities)
 	{
 		auto& transform = coord.GetComponent<Transform>(entity);
+		auto& rigidbody = coord.GetComponent<RigidBody>(entity);
 		const auto& tag = coord.GetComponent<Tag>(entity);
 
 		switch (tag.tag)
 		{
 		case Tags::PLAYER:
 		{
-			transform.velo = { 0.0f, 0.0f };
+			rigidbody.velo = { 0.0f, 0.0f };
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-				transform.velo.x = 500.0f;
+				rigidbody.velo.x = 500.0f;
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-				transform.velo.x = -500.0f;
+				rigidbody.velo.x = -500.0f;
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-				transform.velo.y = -500.0f;
+				rigidbody.velo.y = -500.0f;
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-				transform.velo.y = 500.0f;
+				rigidbody.velo.y = 500.0f;
 
-			break;
-		}
-		case Tags::GOOD:
-		{
-			transform.velo = { 0, 0 };
 			break;
 		}
 		default:
 			break;
 		}
 
-		transform.pos.x += transform.velo.x * dt;
-		transform.pos.y += transform.velo.y * dt;
+		transform.pos.x += rigidbody.velo.x * dt;
+		transform.pos.y += rigidbody.velo.y * dt;
 	}
 }
 
-static sf::CircleShape circle(1.0f);
-static sf::RectangleShape rectangle({1.0f, 1.0f});
+sf::CircleShape circle(1.0f);
+sf::RectangleShape rectangle({1.0f, 1.0f});
 
 void RenderSystem::Draw(Coordinator& coord)
 {
 	for (auto const& entity : m_entities)
 	{
 		const auto& transform = coord.GetComponent<Transform>(entity);
-		const auto& tag = coord.GetComponent<Tag>(entity);
-		const auto& color = coord.GetComponent<Color>(entity);
+		circle.setScale(transform.scale);
+		circle.setPosition(transform.pos);
 
+		const auto& tag = coord.GetComponent<Tag>(entity);
 		switch (tag.tag)
 		{
 		case Tags::PLAYER:
 		{
-
 			SFMLTon::GetView().setCenter({transform.pos.x + transform.scale.x, transform.pos.y + transform.scale.y});
 			SFMLTon::GetWindow().setView(SFMLTon::GetView());
 			break;
@@ -73,23 +69,22 @@ void RenderSystem::Draw(Coordinator& coord)
 			break;
 		}
 
-		circle.setScale(transform.scale);
-		circle.setPosition(transform.pos);
+		const auto& color = coord.GetComponent<Color>(entity);
 		circle.setFillColor(color.color);
 		SFMLTon::GetWindow().draw(circle);
 
 	}
 }
 
-static sf::CircleShape firstShape(1.0f);
-static sf::CircleShape secondShape(1.0f);
+sf::CircleShape firstShape(1.0f);
+sf::CircleShape secondShape(1.0f);
 
 CollisionSystem::CollisionSystem()
 {
 	m_collisions.resize(MAX_ENTITIES);
 }
 
-void CollisionSystem::Detect(const Entity& playerEntity, Coordinator& coord)
+void CollisionSystem::Detect(Entity playerEntity, Coordinator& coord)
 {
 	//for (Entity entity = 0; entity < m_entities.size(); entity++)
 	//{
@@ -131,13 +126,13 @@ void CollisionSystem::Detect(const Entity& playerEntity, Coordinator& coord)
 	//}
 
 
-	auto& playerTransf = coord.GetComponent<Transform>(playerEntity);
+	const auto& playerTransf = coord.GetComponent<Transform>(playerEntity);
 	firstShape.setScale(playerTransf.scale);
 	firstShape.setPosition(playerTransf.pos);
 
 	for (auto const& entity : m_entities)
 	{
-		auto& otherTransf = coord.GetComponent<Transform>(entity);
+		const auto& otherTransf = coord.GetComponent<Transform>(entity);
 
 		if (playerEntity != entity)
 		{
@@ -215,7 +210,7 @@ void CollisionSystem::Act(Coordinator& coord)
 			break;
 		}
 
-		SFMLTon::GetWindow().setTitle("Points: " + std::to_string(playerValue.worth));
+		//SFMLTon::GetWindow().setTitle("Points: " + std::to_string(playerValue.worth));
 
 		playerTransf.scale.x = playerValue.worth;
 		playerTransf.scale.y = playerValue.worth;

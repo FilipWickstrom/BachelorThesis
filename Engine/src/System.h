@@ -41,7 +41,7 @@ public:
 		m_signatures.insert({ typeName, signature });
 	}
 
-	void EntityDestroyed(const Entity& entity)
+	void EntityDestroyed(Entity entity)
 	{
 		for (auto const& pair : m_systems)
 		{
@@ -51,7 +51,7 @@ public:
 		}
 	}
 
-	void EntitySigantureChanged(const Entity& entity, const Signature& entitySignature)
+	void EntitySigantureChanged(Entity entity, const Signature& entitySignature)
 	{
 		for (auto const& pair : m_systems)
 		{
@@ -104,6 +104,6 @@ public:
 
 	CollisionSystem();
 
-	void Detect(const Entity& playerEntity, Coordinator& coord);
+	void Detect(Entity playerEntity, Coordinator& coord);
 	void Act(Coordinator& coord);
 };

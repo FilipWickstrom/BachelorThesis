@@ -14,10 +14,22 @@ struct Transform
 {
 	// Position
 	vec2 pos = {rand() % 10000 - 5000, rand() % 10000 - 5000};
-	// Velocity
-	vec2 velo = {rand() % 32 - 16, rand() % 32 - 16};
+	
 	// Scale
 	vec2 scale = {10.0f, 10.0f};
+};
+
+struct RigidBody
+{
+	// Velocity
+	vec2 velo = { rand() % 32 - 16, rand() % 32 - 16 };
+
+	RigidBody() = default;
+	RigidBody(float velo)
+	{
+		this->velo.x = velo;
+		this->velo.y = velo;
+	}
 };
 
 struct Color
@@ -68,7 +80,7 @@ class IComponentArray
 {
 public:
 	virtual ~IComponentArray() = default;
-	virtual void EntitiyDestroyed(const Entity& entity) = 0;
+	virtual void EntitiyDestroyed(Entity entity) = 0;
 };
 
 template<typename T>
@@ -84,18 +96,18 @@ private:
 
 public:
 
-	void InsertData(const Entity& entity, T component);
+	void InsertData(Entity entity, T component);
 
-	void RemoveData(const Entity& entity);
+	void RemoveData(Entity entity);
 
-	T& GetData(const Entity& entity);
+	T& GetData(Entity entity);
 
 	// Inherited via IComponentArray
-	virtual void EntitiyDestroyed(const Entity& entity) override;
+	virtual void EntitiyDestroyed(Entity entity) override;
 };
 
 template<typename T>
-inline void ComponentArray<T>::InsertData(const Entity& entity, T component)
+inline void ComponentArray<T>::InsertData(Entity entity, T component)
 {
 	assert(m_entityToIndexMap.find(entity) == m_entityToIndexMap.end() && "Component already exists");
 
@@ -107,7 +119,7 @@ inline void ComponentArray<T>::InsertData(const Entity& entity, T component)
 }
 
 template<typename T>
-inline void ComponentArray<T>::RemoveData(const Entity& entity)
+inline void ComponentArray<T>::RemoveData(Entity entity)
 {
 	assert(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end() && "Component doesn't exist");
 
@@ -127,15 +139,15 @@ inline void ComponentArray<T>::RemoveData(const Entity& entity)
 }
 
 template<typename T>
-inline T& ComponentArray<T>::GetData(const Entity& entity)
+inline T& ComponentArray<T>::GetData(Entity entity)
 {
-	assert(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end() && "Component doesn't exist");
+	//assert(m_entityToIndexMap.find(entity) != m_entityToIndexMap.end() && "Component doesn't exist");
 
 	return m_components[m_entityToIndexMap[entity]];
 }
 
 template<typename T>
-inline void ComponentArray<T>::EntitiyDestroyed(const Entity& entity)
+inline void ComponentArray<T>::EntitiyDestroyed(Entity entity)
 {
 	if (m_entityToIndexMap.find(entity) != m_entityToIndexMap.end())
 	{
@@ -190,24 +202,24 @@ public:
 	}
 
 	template<typename T>
-	void AddComponent(const Entity& entity, T component)
+	void AddComponent(Entity entity, T component)
 	{
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
 
 	template<typename T>
-	void RemoveComponent(const Entity& entity)
+	void RemoveComponent(Entity entity)
 	{
 		GetComponentArray<T>()->RemoveData(entity);
 	}
 
 	template<typename T>
-	T& GetComponent(const Entity& entity)
+	T& GetComponent(Entity entity)
 	{
 		return GetComponentArray<T>()->GetData(entity);
 	}
 
-	void EntityDestroyed(const Entity& entity)
+	void EntityDestroyed(Entity entity)
 	{
 		for (auto const& pair : m_componentArrays)
 		{

@@ -15,9 +15,9 @@ public:
 
 	Entity CreateEntity();
 
-	void DestroyEntity(const Entity& entity);
+	void DestroyEntity(Entity entity);
 
-	void SetSignature(const Entity& entity, const Signature& signature);
+	void SetSignature(Entity entity, const Signature& signature);
 
-	Signature GetSignature(const Entity& entity);
+	Signature GetSignature(Entity entity);
 };
