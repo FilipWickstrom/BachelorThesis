@@ -1,5 +1,6 @@
 #pragma once
 
+class Coordinator;
 
 class System
 {
@@ -76,7 +77,7 @@ class MovementSystem : public System
 {
 public:
 
-	void Update(const float& dt);
+	void Update(const float& dt, Coordinator& coord);
 
 };
 
@@ -84,7 +85,7 @@ class RenderSystem : public System
 {
 public:
 
-	void Draw();
+	void Draw(Coordinator& coord);
 };
 
 class CollisionSystem : public System
@@ -103,6 +104,6 @@ public:
 
 	CollisionSystem();
 
-	void Detect(const Entity& playerEntity);
-	void Act();
+	void Detect(const Entity& playerEntity, Coordinator& coord);
+	void Act(Coordinator& coord);
 };

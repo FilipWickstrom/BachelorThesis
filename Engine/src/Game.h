@@ -1,10 +1,12 @@
 #pragma once
 #include "System.h"
+#include "Coordinator.h"
 
 class Game
 {
 private:
 
+	Coordinator m_coordinator;
 	Entity m_playerEntity;
 	std::vector<Entity> m_entities;
 	std::shared_ptr<RenderSystem> m_renderSystem;
@@ -17,6 +19,7 @@ private:
 public:
 
 	Game();
+	~Game();
 	void Init();
 	void Update(const float& dt);
 	void Draw();

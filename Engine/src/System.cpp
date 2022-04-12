@@ -3,12 +3,12 @@
 #include "Components.h"
 #include "Coordinator.h"
 
-void MovementSystem::Update(const float& dt)
+void MovementSystem::Update(const float& dt, Coordinator& coord)
 {
 	for (auto const& entity : m_entities)
 	{
-		auto& transform = Coordinator::GetComponent<Transform>(entity);
-		const auto& tag = Coordinator::GetComponent<Tag>(entity);
+		auto& transform = coord.GetComponent<Transform>(entity);
+		const auto& tag = coord.GetComponent<Tag>(entity);
 
 		switch (tag.tag)
 		{
@@ -44,13 +44,13 @@ void MovementSystem::Update(const float& dt)
 static sf::CircleShape circle(1.0f);
 static sf::RectangleShape rectangle({1.0f, 1.0f});
 
-void RenderSystem::Draw()
+void RenderSystem::Draw(Coordinator& coord)
 {
 	for (auto const& entity : m_entities)
 	{
-		const auto& transform = Coordinator::GetComponent<Transform>(entity);
-		const auto& tag = Coordinator::GetComponent<Tag>(entity);
-		const auto& color = Coordinator::GetComponent<Color>(entity);
+		const auto& transform = coord.GetComponent<Transform>(entity);
+		const auto& tag = coord.GetComponent<Tag>(entity);
+		const auto& color = coord.GetComponent<Color>(entity);
 
 		switch (tag.tag)
 		{
@@ -89,7 +89,7 @@ CollisionSystem::CollisionSystem()
 	m_collisions.resize(MAX_ENTITIES);
 }
 
-void CollisionSystem::Detect(const Entity& playerEntity)
+void CollisionSystem::Detect(const Entity& playerEntity, Coordinator& coord)
 {
 	//for (Entity entity = 0; entity < m_entities.size(); entity++)
 	//{
@@ -131,13 +131,13 @@ void CollisionSystem::Detect(const Entity& playerEntity)
 	//}
 
 
-	auto& playerTransf = Coordinator::GetComponent<Transform>(playerEntity);
+	auto& playerTransf = coord.GetComponent<Transform>(playerEntity);
 	firstShape.setScale(playerTransf.scale);
 	firstShape.setPosition(playerTransf.pos);
 
 	for (auto const& entity : m_entities)
 	{
-		auto& otherTransf = Coordinator::GetComponent<Transform>(entity);
+		auto& otherTransf = coord.GetComponent<Transform>(entity);
 
 		if (playerEntity != entity)
 		{
@@ -150,7 +150,7 @@ void CollisionSystem::Detect(const Entity& playerEntity)
 	}
 }
 
-void CollisionSystem::Act()
+void CollisionSystem::Act(Coordinator& coord)
 {
 	//while (m_collisions.size() > 0)
 	//{
@@ -194,16 +194,16 @@ void CollisionSystem::Act()
 	{
 		const CollInfo& info = m_collisions[(int)m_collisions.size() - 1];
 
-		auto& playerTransf = Coordinator::GetComponent<Transform>(info.first);
-		Value& playerValue = Coordinator::GetComponent<Value>(info.first);
-		Tag& tagOther = Coordinator::GetComponent<Tag>(info.second);
+		auto& playerTransf = coord.GetComponent<Transform>(info.first);
+		Value& playerValue = coord.GetComponent<Value>(info.first);
+		Tag& tagOther = coord.GetComponent<Tag>(info.second);
 
 		switch (tagOther.tag)
 		{
 		case Tags::GOOD:
 		{
 			playerValue.worth++;
-			Coordinator::DestroyEntity(info.second);
+			coord.DestroyEntity(info.second);
 			break;
 		}
 		case Tags::BAD:
