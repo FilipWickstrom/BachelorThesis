@@ -42,7 +42,7 @@ int main()
     while (SFMLTon::GetWindow().isOpen())
     {
         float dt = start.getElapsedTime().asSeconds();
-        //std::cout << "FPS: " << 1.0f / dt << std::endl;
+        std::cout << "FPS: " << 1.0f / dt << std::endl;
         start.restart();
 
         sf::Event event;
@@ -52,11 +52,8 @@ int main()
                 SFMLTon::GetWindow().close();
         }
 
-        double start = omp_get_wtime();
         game.Update(dt);
-        double end = omp_get_wtime() - start;
-        std::cout << "Time: " << end << "\n";
-        game.Draw();
+        //game.Draw();
     }
 
     SFMLTon::GetWindow().close();

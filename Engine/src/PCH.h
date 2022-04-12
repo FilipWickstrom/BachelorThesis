@@ -45,9 +45,9 @@ typedef sf::Vector2f vec2;
 using Entity = std::uint32_t;
 using ComponentType = std::uint8_t;
 
-const ComponentType MAX_COMPONENTS = 32;
+const ComponentType MAX_COMPONENTS = 6;
 using Signature = std::bitset<MAX_COMPONENTS>;
-const Entity MAX_ENTITIES = 2000;
+const Entity MAX_ENTITIES = 20000;
 
 const uint WINDOW_WIDTH = 1920;
 const uint WINDOW_HEIGHT = 1080;
