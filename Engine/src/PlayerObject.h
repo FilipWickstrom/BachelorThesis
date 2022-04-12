@@ -14,6 +14,7 @@ public:
 	~PlayerObject() = default;
 
 	void SetPoints(const int& points);
+	const int& GetMaxPoints() const;
 	bool CheckWinCondition();
 	
 	// Inherited via GameObject

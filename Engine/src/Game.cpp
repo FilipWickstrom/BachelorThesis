@@ -53,7 +53,7 @@ void Game::Update(const float& dt)
 	GetObjectsWithTag(ETagType::goodfood, allfood);
 	GetObjectsWithTag(ETagType::badfood, allfood);
 
-	//Collision check
+	//Collision check for player
 	for (uint p = 0; p < static_cast<uint>(players.size()); p++)
 	{
 		//Player info
@@ -84,7 +84,7 @@ void Game::Update(const float& dt)
 
 			if (playerObj->IsColliding(*currentEnemy))
 			{
-				playerObj->SetPoints(0);
+				playerObj->SetPoints(-playerObj->GetMaxPoints());
 			}
 		}
 	}
