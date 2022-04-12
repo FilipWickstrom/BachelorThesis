@@ -7,5 +7,6 @@ enum class ETagType : uint
 	player,
 	enemy,
 	goodfood,
-	badfood
+	badfood,
+	garbage //Removes from gameobjects
 };

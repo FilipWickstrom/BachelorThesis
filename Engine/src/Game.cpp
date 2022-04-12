@@ -6,12 +6,11 @@
 
 Game::Game()
 {
-	vec2 centerPos = { WIN_WIDTH / 2.f, WIN_HEIGHT / 2.f};
-
 	//Add a player
 	std::unique_ptr<GameObject> player = std::make_unique<PlayerObject>();
-	player->SetPosition(centerPos);
+	player->SetPosition({ WIN_WIDTH / 2.f, WIN_HEIGHT / 2.f });
 	m_gameobjects.push_back(std::move(player));
+	m_playerID = static_cast<uint>(m_gameobjects.size() - 1);
 
 	//Add some enemies
 	for (uint i = 0; i < NR_OF_ENEMIES; i++)
@@ -28,7 +27,7 @@ Game::Game()
 	}
 }
 
-void Game::GetObjectsWithTag(ETagType tag, std::vector<uint>& vec)
+void Game::GetObjectsWithTag(const ETagType& tag, std::vector<uint>& vec)
 {
 	for (uint i = 0; i < static_cast<uint>(m_gameobjects.size()); i++)
 	{
@@ -44,67 +43,60 @@ void Game::Update(const float& dt)
 	for (auto& obj : m_gameobjects)
 		obj->Update(dt);
 
-	std::vector<uint> players;
 	std::vector<uint> enemies;
 	std::vector<uint> allfood;
-	std::vector<uint> removeObjs;
-	GetObjectsWithTag(ETagType::player, players);
 	GetObjectsWithTag(ETagType::enemy, enemies);
 	GetObjectsWithTag(ETagType::goodfood, allfood);
 	GetObjectsWithTag(ETagType::badfood, allfood);
+	bool playerHasCollided = false;
 
-	//Collision check for player
-	for (uint p = 0; p < static_cast<uint>(players.size()); p++)
+	//Player info
+	GameObject* currentPlayer = m_gameobjects.at(m_playerID).get();
+	PlayerObject* playerObj = dynamic_cast<PlayerObject*>(currentPlayer);
+
+	for (uint i = 0; i < static_cast<uint>(allfood.size()); i++)
 	{
-		//Player info
-		uint playerID = players.at(p);
-		GameObject* currentPlayer = m_gameobjects.at(playerID).get();
-		PlayerObject* playerObj = dynamic_cast<PlayerObject*>(currentPlayer);
+		uint foodID = allfood.at(i);
+		GameObject* currentFood = m_gameobjects.at(foodID).get();
 
-		for (uint f = 0; f < static_cast<uint>(allfood.size()); f++)
+		if (playerObj->IsColliding(*currentFood))
 		{
-			uint foodID = allfood.at(f);
-			GameObject* currentFood = m_gameobjects.at(foodID).get();
+			playerHasCollided = true;
+			FoodObject* food = dynamic_cast<FoodObject*>(currentFood);
+			//Add points to player
+			playerObj->SetPoints(food->GetWorth());
 
-			if (playerObj->IsColliding(*currentFood))
+			//Check winconditions for players
+			if (playerObj->CheckWinCondition())
 			{
-				FoodObject* food = dynamic_cast<FoodObject*>(currentFood);
-				
-				//Remove the food
-				removeObjs.push_back(foodID);
-				//Add points to player
-				playerObj->SetPoints(food->GetWorth());
+				WINDOW.setTitle("You won the game!");
 			}
-		}
 
-		for (uint e = 0; e < static_cast<uint>(enemies.size()); e++)
-		{
-			uint enemyID = enemies.at(e);
-			GameObject* currentEnemy = m_gameobjects.at(enemyID).get();
-
-			if (playerObj->IsColliding(*currentEnemy))
-			{
-				playerObj->SetPoints(-playerObj->GetMaxPoints());
-			}
+			//Remove the food and tell garbage collector to clean up
+			m_gameobjects.at(foodID)->SetTag(ETagType::garbage);
 		}
 	}
 
-	//Check winconditions for players
-	for (uint p = 0; p < static_cast<uint>(players.size()); p++)
+	for (uint i = 0; i < static_cast<uint>(enemies.size()); i++)
 	{
-		uint playerID = players.at(p);
-		GameObject* currentPlayer = m_gameobjects.at(playerID).get();
-		PlayerObject* playerObj = dynamic_cast<PlayerObject*>(currentPlayer);
+		uint enemyID = enemies.at(i);
+		GameObject* currentEnemy = m_gameobjects.at(enemyID).get();
 
-		if (playerObj->CheckWinCondition())
-			WINDOW.setTitle("Player: " + std::to_string(playerID) + " won the game!");
+		if (playerObj->IsColliding(*currentEnemy))
+		{
+			playerObj->SetPoints(-playerObj->GetMaxPoints());
+		}
 	}
+	
+	//Player did not collide. Just end/stop it now!
+	if (!playerHasCollided) return;
 
-	//Clean up objects
-	for (uint i = 0; i < static_cast<uint>(removeObjs.size()); i++)
+
+	//Garbage collector
+	for (size_t i = 0; i < m_gameobjects.size(); i++)
 	{
-		uint removeID = removeObjs.at(i);
-		m_gameobjects.erase(m_gameobjects.begin() + removeID);
+		if (m_gameobjects.at(i)->GetTag() == ETagType::garbage)
+			m_gameobjects.erase(m_gameobjects.begin() + i);
 	}
 }
 

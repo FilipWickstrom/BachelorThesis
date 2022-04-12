@@ -6,12 +6,13 @@ PlayerObject::PlayerObject()
 {
 	m_defaultSize = 10;
 	m_points = 0;
-	m_maxPoints = 100;
-	m_movementSpeed = 250;
+	m_maxPoints = GOALPOINTS;
+	m_movementSpeed = PLAYERSPEED;
 	m_shape = std::make_unique<sf::CircleShape>(static_cast<float>(m_defaultSize));
 	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
 	m_shape->setFillColor(sf::Color::Blue);
 	m_shape->setOutlineColor(sf::Color::White);
+	m_shape->setOutlineThickness(1.f);
 }
 
 void PlayerObject::SetPoints(const int& points)
@@ -46,13 +47,13 @@ void PlayerObject::Update(const float& dt)
 
 	//Get input from the player controller
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		velocity.x = -1;
+		velocity.x += -1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		velocity.x = 1;
+		velocity.x += 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		velocity.y = -1;
+		velocity.y += -1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		velocity.y = 1;
+		velocity.y += 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 	{
 		velocity.x *= 2;

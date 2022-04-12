@@ -22,6 +22,11 @@ void GameObject::SetPosition(const vec2& pos)
 	m_shape->setPosition(pos);
 }
 
+void GameObject::SetTag(const ETagType& tag)
+{
+	m_tag = tag;
+}
+
 const vec2& GameObject::GetPosition() const
 {
 	return m_shape->getPosition();

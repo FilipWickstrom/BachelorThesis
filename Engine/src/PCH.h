@@ -43,7 +43,13 @@ typedef sf::Vector2f vec2;
 #include "Structures.h"
 
 // Constants
-constexpr uint WIN_WIDTH		= 1920;
-constexpr uint WIN_HEIGHT		= 1080;
-constexpr uint NR_OF_ENEMIES	= 100;
-constexpr uint NR_OF_FOOD		= 100;
+constexpr uint	WIN_WIDTH		= 1920;
+constexpr uint	WIN_HEIGHT		= 1080;
+
+// Game specific
+constexpr uint	NR_OF_ENEMIES	= 2000;
+constexpr uint	NR_OF_FOOD		= 2000;
+constexpr float SPAWNDENSITY	= 4.f;	//1 = everything fits within the window, 
+										//3 = 3 times the window size
+constexpr uint  GOALPOINTS		= 50;
+constexpr float PLAYERSPEED		= 250.f;

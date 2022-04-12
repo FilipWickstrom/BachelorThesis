@@ -3,8 +3,8 @@
 class GameObject
 {
 protected:
-	ETagType m_tag;
-	std::unique_ptr<sf::Shape> m_shape;
+	ETagType					m_tag;
+	std::unique_ptr<sf::Shape>	m_shape;
 
 public:
 	GameObject();
@@ -13,6 +13,7 @@ public:
 
 	// Setters:
 	void SetPosition(const vec2& pos);
+	void SetTag(const ETagType& tag);
 
 	// Getters:
 	const vec2& GetPosition() const;

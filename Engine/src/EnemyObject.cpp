@@ -10,7 +10,16 @@ EnemyObject::EnemyObject()
 	m_shape = std::make_unique<sf::CircleShape>(10.f);
 	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
 	m_shape->setFillColor(sf::Color::Magenta);
-	m_shape->setPosition({ rand() % WIN_WIDTH * 2.f - WIN_WIDTH, rand() % WIN_HEIGHT * 2.f - WIN_HEIGHT });
+
+	// Spawn location
+	// Max X:	winWidth	* SPAWNDENSITY
+	// Min X:  -winWidth	* SPAWNDENSITY
+	// Max Y:   winHeight	* SPAWNDENSITY
+	// Min Y:  -winHeight   * SPAWNDENSITY
+	m_shape->setPosition(
+		(rand() % WIN_WIDTH * SPAWNDENSITY	- WIN_WIDTH)	+ WIN_WIDTH,
+		(rand() % WIN_HEIGHT * SPAWNDENSITY - WIN_HEIGHT)	+ WIN_HEIGHT
+	);
 }
 
 void EnemyObject::Update(const float& dt)

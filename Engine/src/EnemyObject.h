@@ -4,8 +4,6 @@
 class EnemyObject : public GameObject
 {
 private:
-	uint    m_points;
-	uint	m_maxPoints;
 	float	m_movementSpeed;
 	vec2	m_velocity;
 

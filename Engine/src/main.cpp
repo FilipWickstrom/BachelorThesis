@@ -16,7 +16,7 @@ int main()
     while (WINDOW.isOpen())
     {
         float dt = clock.getElapsedTime().asSeconds();
-        std::cout << "FPS: " << 1.f / dt << std::endl;
+        //std::cout << "FPS: " << 1.f / dt << std::endl;
         clock.restart();
 
         sf::Event event;
