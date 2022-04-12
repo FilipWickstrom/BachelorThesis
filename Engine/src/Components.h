@@ -43,11 +43,6 @@ struct Color
 	}
 };
 
-struct Collider
-{
-	uint8_t hasCollided = 0;
-};
-
 struct Value
 {
 	int worth = 1;
@@ -68,6 +63,8 @@ struct Tag
 		this->tag = tag;
 	}
 };
+
+
 
 
 // END OF COMPONENTS
@@ -161,15 +158,15 @@ class ComponentManager
 {
 private:
 
-	std::unordered_map<const char*, ComponentType> m_componentTypes{};
-	std::unordered_map<const char*, std::shared_ptr<IComponentArray>> m_componentArrays{};
+	std::unordered_map<size_t, ComponentType> m_componentTypes{};
+	std::unordered_map<size_t, std::shared_ptr<IComponentArray>> m_componentArrays{};
 
 	ComponentType m_nextComponentType{};
 
 	template<typename T>
 	std::shared_ptr<ComponentArray<T>> GetComponentArray()
 	{
-		const char* typeName = typeid(T).name();
+		size_t typeName = typeid(T).hash_code();
 
 		assert(m_componentTypes.find(typeName) != m_componentTypes.end() && "Such component doesnt exist.");
 
@@ -181,7 +178,7 @@ public:
 	template<typename T>
 	void RegisterComponent()
 	{
-		const char* typeName = typeid(T).name();
+		size_t typeName = typeid(T).hash_code();
 
 		assert(m_componentTypes.find(typeName) == m_componentTypes.end() && "Component is already registered");
 
@@ -194,7 +191,7 @@ public:
 	template<typename T>
 	ComponentType GetComponentType()
 	{
-		const char* typeName = typeid(T).name();
+		size_t typeName = typeid(T).hash_code();
 
 		assert(m_componentTypes.find(typeName) != m_componentTypes.end() && "Component doesn't exist.");
 
