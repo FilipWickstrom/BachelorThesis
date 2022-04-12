@@ -2,10 +2,6 @@
 
 class GameObject
 {
-private:
-	// Bounding sphere around the figure
-	float m_collisionRad;
-
 protected:
 	ETagType m_tag;
 	std::unique_ptr<sf::Shape> m_shape;
@@ -20,13 +16,10 @@ public:
 
 	// Getters:
 	const vec2& GetPosition() const;
-	const float& GetCollionRad() const;
+	const ETagType& GetTag() const;
 
 
-	// Collision
 	bool IsColliding(const GameObject& obj) const;
-
-
 	virtual void Update(const float& dt) = 0;
 	virtual void Render() = 0;
 };

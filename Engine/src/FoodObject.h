@@ -1,20 +1,19 @@
 #pragma once
 #include "GameObject.h"
 
-class GoodFood : public GameObject
+class FoodObject : public GameObject
 {
 private:
-	uint m_worth;
+	int m_worth;
 
 public:
-	GoodFood();
-	~GoodFood() = default;
+	FoodObject();
+	~FoodObject() = default;
 
-
+	const int& GetWorth() const;
 
 	// Inherited via GameObject
 	virtual void Update(const float& dt) override;
-
 	virtual void Render() override;
 
 };

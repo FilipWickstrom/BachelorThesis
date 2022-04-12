@@ -9,9 +9,3 @@ enum class ETagType : uint
 	goodfood,
 	badfood
 };
-
-struct Health
-{
-	uint current = { 0 };
-	uint max	 = { 100};
-};

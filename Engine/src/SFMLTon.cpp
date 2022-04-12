@@ -3,7 +3,7 @@
 
 SFMLTon::SFMLTon()
 {
-	m_window.create(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "Thesis: OOD vs DOD vs DOD-MT");
+	m_window.create(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "Points: 0");
 	m_camera.setCenter(WIN_WIDTH / 2.f, WIN_HEIGHT / 2.f);
 	m_camera.setSize(WIN_WIDTH, WIN_HEIGHT);
 }

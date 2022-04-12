@@ -4,7 +4,8 @@
 class EnemyObject : public GameObject
 {
 private:
-	Health	m_health;
+	uint    m_points;
+	uint	m_maxPoints;
 	float	m_movementSpeed;
 	vec2	m_velocity;
 
