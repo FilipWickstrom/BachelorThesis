@@ -215,6 +215,8 @@ void CollisionSystem::Act()
 			break;
 		}
 
+		SFMLTon::GetWindow().setTitle("Points: " + std::to_string(playerValue.worth));
+
 		playerTransf.scale.x = playerValue.worth;
 		playerTransf.scale.y = playerValue.worth;
 
