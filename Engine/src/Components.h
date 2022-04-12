@@ -3,8 +3,8 @@
 enum class Tags : uint8_t
 {
 	DEFAULT,
-	PLAYER,
 	GOOD,
+	PLAYER,
 	BAD,
 };
 
@@ -33,7 +33,7 @@ struct Color
 
 struct Collider
 {
-	uint8_t isCollide;
+	uint8_t hasCollided = 0;
 };
 
 struct Value

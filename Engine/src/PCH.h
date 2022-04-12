@@ -47,7 +47,7 @@ using ComponentType = std::uint8_t;
 
 const ComponentType MAX_COMPONENTS = 5;
 using Signature = std::bitset<MAX_COMPONENTS>;
-const Entity MAX_ENTITIES = 1000;
+const Entity MAX_ENTITIES = 200;
 
 const uint WINDOW_WIDTH = 1920;
 const uint WINDOW_HEIGHT = 1080;
