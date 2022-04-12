@@ -53,6 +53,7 @@ int main()
         }
 
         game.Update(dt);
+
         //game.Draw();
     }
 

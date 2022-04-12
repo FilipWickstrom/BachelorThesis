@@ -4,20 +4,9 @@ struct Transform
 {
 	vec2 position = {rand() % 10000 - 5000, rand() % 10000 - 5000 };
 	vec2 velocity = {rand() % 32 - 16, rand() % 32 - 16 };
+	vec2 scale = { 1.0f, 1.0f };
 
 	Transform() = default;
-};
-
-struct Color
-{
-	sf::Color color = sf::Color::White;
-	Color() = default;
-	Color(const sf::Color& color)
-	{
-		this->color = color;
-	}
-
-
 };
 
 struct Moveable
@@ -50,7 +39,12 @@ struct Value
 struct Renderable
 {
 	sf::CircleShape shape;
-	Renderable() = default;
+	uint8_t shouldRender = 1;
+	Renderable()
+	{
+		shape.setRadius(12.5f);
+		shape.setFillColor(sf::Color::White);
+	}
 	Renderable(const sf::Color& color)
 	{
 		shape.setRadius(12.5f);
