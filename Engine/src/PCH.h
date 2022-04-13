@@ -31,11 +31,15 @@
 #include <SFML/GpuPreference.hpp>
 
 
+// EnTT
+#include <entt.hpp>
+
+
 // type defs
 typedef unsigned int uint;
 typedef sf::Vector2f vec2;
 
-// Singletons if needed
+// Singletons
 #include "SFMLTon.h"
 #define WINDOW SFMLTon::GetWindow()
 

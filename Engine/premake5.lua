@@ -23,7 +23,8 @@ project "Game"
     includedirs {
         "src",
         "../Engine/src",
-        "../ThirdParty/SFML/include/"
+        "../ThirdParty/SFML/include/",
+		"../ThirdParty/EnTT/include/"
     }
 	libdirs {
 		"../ThirdParty/SFML/lib/"
@@ -45,8 +46,9 @@ project "Game"
     vpaths {
 		["Singletons"]		= { "**SFMLTon.*" },
 		
-		["Objects"]			= { "**Object.*"},
-		
+		["OOD/Objects"]		= { "**Object.*"},
+		["OOD"]				= { "**GameOOD.*"},
+		["DOD"]				= { "**GameDOD.*"}	
     }
 
     filter {"system:windows"}

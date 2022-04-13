@@ -1,17 +1,23 @@
 #include "PCH.h"
-#include "Game.h"
-
-#define OOD
-//#define DOD
+#define OOD     //OOD or DOD
 
 #ifdef OOD
+#include "GameOOD.h"
+#elif defined DOD
+#include "GameDOD.h"
+#endif
+
 int main()
 {
     srand(static_cast<unsigned int>(time(0)));
     sf::Clock clock;
 
     //Init all gameobjects
-    Game game;
+#ifdef OOD
+    GameOOD game;
+#elif defined DOD
+    GameDOD game;
+#endif
 
     while (WINDOW.isOpen())
     {
@@ -35,6 +41,3 @@ int main()
     WINDOW.close();
     return 0;
 }
-#elif defined DOD
-
-#endif

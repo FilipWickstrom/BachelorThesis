@@ -1,10 +1,10 @@
 #include "PCH.h"
-#include "Game.h"
+#include "GameOOD.h"
 #include "PlayerObject.h"
 #include "EnemyObject.h"
 #include "FoodObject.h"
 
-Game::Game()
+GameOOD::GameOOD()
 {
 	//Add a player
 	std::unique_ptr<GameObject> player = std::make_unique<PlayerObject>();
@@ -27,7 +27,7 @@ Game::Game()
 	}
 }
 
-void Game::GetObjectsWithTag(const ETagType& tag, std::vector<uint>& vec)
+void GameOOD::GetObjectsWithTag(const ETagType& tag, std::vector<uint>& vec)
 {
 	for (uint i = 0; i < static_cast<uint>(m_gameobjects.size()); i++)
 	{
@@ -37,7 +37,7 @@ void Game::GetObjectsWithTag(const ETagType& tag, std::vector<uint>& vec)
 	vec.shrink_to_fit();
 }
 
-void Game::Update(const float& dt)
+void GameOOD::Update(const float& dt)
 {
 	//Update every object - mostly movement
 	for (auto& obj : m_gameobjects)
@@ -100,7 +100,7 @@ void Game::Update(const float& dt)
 	}
 }
 
-void Game::Render()
+void GameOOD::Render()
 {
 	WINDOW.clear();
 

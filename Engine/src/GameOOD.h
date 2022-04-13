@@ -1,15 +1,15 @@
 #pragma once
 #include "GameObject.h"
 
-class Game
+class GameOOD
 {
 private:
 	std::vector<std::unique_ptr<GameObject>> m_gameobjects;
 	uint									 m_playerID;
 
 public:
-	Game();
-	~Game() = default;
+	GameOOD();
+	~GameOOD() = default;
 	
 	//Gets a vector of all the tagged objects by id
 	//[Can be optimized] by sending in a number of tags to avoid searching multiple times
