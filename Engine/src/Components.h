@@ -38,8 +38,8 @@ struct Value
 
 struct Renderable
 {
-	sf::CircleShape shape;
 	uint8_t shouldRender = 1;
+	sf::CircleShape shape;
 	Renderable()
 	{
 		shape.setRadius(12.5f);

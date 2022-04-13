@@ -38,68 +38,6 @@ void Game::Init()
             ECS::Get().m_tags[newEnt].tag = Tags::GOOD;
         }
     }
-
-
-
-    //m_coordinator.Init();
-    //m_coordinator.RegisterComponent<Transform>();
-    //m_coordinator.RegisterComponent<Color>();
-    //m_coordinator.RegisterComponent<Value>();
-    //m_coordinator.RegisterComponent<Moveable>();
-    //m_coordinator.RegisterComponent<Tag>();
-    //m_coordinator.RegisterComponent<Renderable>();
-
-
-    //m_renderSystem = m_coordinator.RegisterSystem<RenderSystem>();
-    //m_movementSystem = m_coordinator.RegisterSystem<MovementSystem>();
-    //m_collisionSystem = m_coordinator.RegisterSystem<CollisionSystem>();
-
-    //Signature rendSignature;
-    //rendSignature.set(m_coordinator.GetComponentType<Renderable>());
-    //m_coordinator.SetSystemSignature<RenderSystem>(rendSignature);
-
-    //Signature moveSignature;
-    //moveSignature.set(m_coordinator.GetComponentType<Moveable>());
-    ////moveSignature.set(m_coordinator.GetComponentType<Enemy>());
-    //m_coordinator.SetSystemSignature<MovementSystem>(moveSignature);
-
-    //Signature collSignature;
-    //collSignature.set(m_coordinator.GetComponentType<Transform>());
-    //m_coordinator.SetSystemSignature<CollisionSystem>(collSignature);
-
-    //m_entities.resize(MAX_ENTITIES);
-
-    //Entity player = m_coordinator.CreateEntity();
-    //m_coordinator.AddComponent(player, Transform());
-    //m_coordinator.AddComponent(player, Value());
-    //m_coordinator.AddComponent(player, Tag(Tags::PLAYER));
-    //m_coordinator.AddComponent(player, Moveable());
-    //m_coordinator.AddComponent(player, Renderable(sf::Color::Blue));
-    //m_entities[0] = player;
-    //m_playerEntity = player;
-
-    //for (Entity entity = 1; entity < MAX_ENTITIES; entity++)
-    //{
-    //    entity = m_coordinator.CreateEntity();
-
-    //    m_coordinator.AddComponent(entity, Transform());
-
-    //    if (entity % 2 == 0)
-    //    {
-    //        m_coordinator.AddComponent(entity, Tag(Tags::BAD));
-    //        m_coordinator.AddComponent(entity, Moveable());
-    //        m_coordinator.AddComponent(entity, Renderable(sf::Color::Red));
-    //    }
-    //    else
-    //    {
-    //        m_coordinator.AddComponent(entity, Tag(Tags::GOOD));
-    //        m_coordinator.AddComponent(entity, Renderable(sf::Color::Green));
-    //    }
-
-    //    
-    //    m_coordinator.AddComponent(entity, Value());
-    //    m_entities[entity] = entity;
-    //}
 }
 
 
@@ -118,9 +56,7 @@ void Game::Update(const float& dt)
         transform.position.y += transform.velocity.y * dt;
 
         Renderable& renderable = ECS::Get().m_renderables[entity];
-        renderable.shape.setPosition(transform.position);
-
-        if (renderable.shouldRender == 1)
+        if (renderable.shouldRender)
         {
             //SFMLTon::GetWindow().draw(renderable.shape);
 
@@ -148,6 +84,8 @@ void Game::Update(const float& dt)
 
             }
         }
+
+        renderable.shape.setPosition(transform.position);
     }
 
     // Player movement.
