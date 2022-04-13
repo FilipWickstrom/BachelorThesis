@@ -2,8 +2,8 @@
 
 struct Transform
 {
-	vec2 position = {rand() % 10000 - 5000, rand() % 10000 - 5000 };
-	vec2 velocity = {rand() % 32 - 16, rand() % 32 - 16 };
+	vec2 position = {static_cast<float>(rand() % 10000 - 5000), static_cast<float>(rand() % 10000 - 5000) };
+	vec2 velocity = { static_cast<float>(rand() % 32 - 16), static_cast<float>(rand() % 32 - 16) };
 	vec2 scale = { 1.0f, 1.0f };
 
 	Transform() = default;

@@ -32,7 +32,7 @@ int main()
 #elif defined DOD
 int main()
 {
-    srand(time(nullptr));
+    srand(static_cast<uint>(time(nullptr)));
 
     Game game;
     game.Init();

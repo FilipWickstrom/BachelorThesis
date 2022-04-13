@@ -5,26 +5,20 @@ class ECS
 {
 private:
 
-	ECS();
-	~ECS() = default;
-	static std::queue<Entity> m_availableEntities;
-	static std::vector<Entity> m_activeEntities;
+	std::queue<Entity> m_availableEntities;
+	std::vector<Entity> m_activeEntities;
 
 public:
+	ECS();
+	~ECS() = default;
 
-	static auto& Get()
-	{
-		static ECS instance;
-		return instance;
-	}
+	std::vector<Transform> transforms;
+	std::vector<Renderable> renderables;
+	std::vector<Tag> tags;
+	std::vector<Value> values;
 
-	static std::array<Transform, MAX_ENTITIES> m_transforms;
-	static std::array<Renderable, MAX_ENTITIES> m_renderables;
-	static std::array<Tag, MAX_ENTITIES> m_tags;
-	static std::array<Value, MAX_ENTITIES> m_values;
-
-	static Entity CreateEntity();
+	Entity CreateEntity();
 	void DestroyEntity(const Entity& entity);
 
-	static std::vector<Entity>& GetActiveEntities();
+	std::vector<Entity>& GetActiveEntities();
 };
