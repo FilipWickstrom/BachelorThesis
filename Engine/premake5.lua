@@ -44,7 +44,7 @@ project "Game"
 
     vpaths {
 		["Singletons"]		= { "**SFMLTon.*" },
-		["ECS"] 			= {"**Components.*"},
+		["ECS"] 			= {"**Components.*", "**ComponentArray.*"},
 		["Game"]			= {"**Game.*"},
 		["REAL ECS"]		= {"**ECS.*"},
 		["Objects"]			= {"**GameObject.*", "**PlayerObject.*", "**FoodObject.*", "**EnemyObject.*"}

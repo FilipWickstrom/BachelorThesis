@@ -11,10 +11,10 @@ ECS::ECS()
 
 	m_activeEntities.reserve(MAX_ENTITIES);
 
-	transforms.resize(MAX_ENTITIES);
-	renderables.resize(MAX_ENTITIES);
-	tags.resize(MAX_ENTITIES);
-	values.resize(MAX_ENTITIES);
+	//transforms.resize(MAX_ENTITIES);
+	//renderables.resize(MAX_ENTITIES);
+	//tags.resize(MAX_ENTITIES);
+	//values.resize(MAX_ENTITIES);
 }
 
 Entity ECS::CreateEntity()
