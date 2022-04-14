@@ -16,11 +16,6 @@ public:
 	ECS();
 	~ECS() = default;
 
-	//std::vector<Transform> transforms;
-	//std::vector<Renderable> renderables;
-	//std::vector<Tag> tags;
-	//std::vector<Value> values;
-
 	Entity CreateEntity();
 	void DestroyEntity(const Entity& entity);
 
@@ -38,9 +33,8 @@ public:
 	}
 
 	template<typename T>
-	std::array<T, MAX_ENTITIES>& GetComponentArray() const
+	CompArray<T>& GetComponentArray() const
 	{
-
 		size_t type = typeid(T).hash_code();
 
 		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");

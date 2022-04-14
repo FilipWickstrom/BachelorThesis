@@ -16,19 +16,36 @@ Game::~Game()
 void Game::Init()
 {
     m_ecs.RegisterComponent(Transform());
+    m_ecs.RegisterComponent(Renderable());
 
-    CompArray<Transform> test = m_ecs.GetComponentArray<Transform>();
+    for (int i = 0; i < MAX_ENTITIES; i++)
+    {
+        Entity entity = m_ecs.CreateEntity();
+    }
 }
 
 void Game::Update(const float& dt)
 {
+    CompArray<Transform>& transforms = m_ecs.GetComponentArray<Transform>();
+    CompArray<Renderable>& renderables = m_ecs.GetComponentArray<Renderable>();
 
+    for (auto& entity : m_ecs.GetActiveEntities())
+    {
+        transforms[entity].position.x += transforms[entity].velocity.x * dt;
+        transforms[entity].position.y += transforms[entity].velocity.y * dt;
+
+        renderables[entity].shape.setPosition(transforms[entity].position);
+    }
 }
 
 void Game::Draw()
 {
     SFMLTon::GetWindow().clear();
-
+    CompArray<Renderable>& renderables = m_ecs.GetComponentArray<Renderable>();
+    for (auto& entity : m_ecs.GetActiveEntities())
+    {
+        SFMLTon::GetWindow().draw(renderables[entity].shape);
+    }
     SFMLTon::GetWindow().display();
 }
 #endif

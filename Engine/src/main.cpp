@@ -49,7 +49,7 @@ int main()
     while (SFMLTon::GetWindow().isOpen())
     {
         float dt = start.getElapsedTime().asSeconds();
-        //std::cout << "FPS: " << 1.0f / dt << std::endl;
+        std::cout << "FPS: " << 1.0f / dt << std::endl;
         start.restart();
 
         sf::Event event;
