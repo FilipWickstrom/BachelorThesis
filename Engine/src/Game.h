@@ -1,14 +1,15 @@
 #pragma once
-#include "System.hpp"
-#include "Coordinator.hpp"
 #include "Components.h"
 #include "ECS.h"
+#include "FoodObject.h"
+#include "PlayerObject.h"
+#include "EnemyObject.h"
 
+#ifdef DOD
 class Game
 {
 private:
 
-	Coordinator m_coordinator;
 	Entity m_playerEntity;
 	std::vector<Entity> m_entities;
 	ECS m_ecs;
@@ -21,3 +22,24 @@ public:
 	void Update(const float& dt);
 	void Draw();
 };
+#endif
+
+#ifdef OOD
+class Game
+{
+private:
+
+	PlayerObject m_player;
+	std::vector<RenderObject*> m_objects;
+
+public:
+
+	Game();
+	~Game();
+
+	void Init();
+	void Update(const float& dt);
+	void Draw();
+
+};
+#endif

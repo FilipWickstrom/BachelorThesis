@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "ECS.h"
 
+#ifdef DOD
 ECS::ECS()
 {
 	for (Entity i = 0; i < MAX_ENTITIES; i++)
@@ -34,4 +35,4 @@ std::vector<Entity>& ECS::GetActiveEntities()
 {
 	return m_activeEntities;
 }
-
+#endif

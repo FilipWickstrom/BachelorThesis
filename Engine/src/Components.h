@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef DOD
+
 struct Transform
 {
 	vec2 position = {static_cast<float>(rand() % 10000 - 5000), static_cast<float>(rand() % 10000 - 5000) };
@@ -7,11 +9,6 @@ struct Transform
 	vec2 scale = { 1.0f, 1.0f };
 
 	Transform() = default;
-};
-
-struct Moveable
-{
-
 };
 
 enum class Tags : uint8_t
@@ -51,3 +48,6 @@ struct Renderable
 		shape.setFillColor(color);
 	}
 };
+
+
+#endif

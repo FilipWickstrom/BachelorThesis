@@ -1,6 +1,8 @@
 #pragma once
 #include "Components.h"
 
+
+#ifdef DOD
 class ECS
 {
 private:
@@ -22,3 +24,4 @@ public:
 
 	std::vector<Entity>& GetActiveEntities();
 };
+#endif

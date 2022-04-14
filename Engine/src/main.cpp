@@ -1,18 +1,23 @@
 #include "PCH.h"
 #include "Game.h"
 
-//#define OOD
-#define DOD
-
 
 #ifdef OOD
 int main()
 {
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    srand(static_cast<uint>(time(nullptr)));
+
+    Game game;
+    game.Init();
+
+    sf::Clock start;
 
     while (SFMLTon::GetWindow().isOpen())
     {
+        float dt = start.getElapsedTime().asSeconds();
+        std::cout << "FPS: " << 1.0f / dt << std::endl;
+        start.restart();
+
         sf::Event event;
         while (SFMLTon::GetWindow().pollEvent(event))
         {
@@ -20,8 +25,10 @@ int main()
                 SFMLTon::GetWindow().close();
         }
 
+        game.Update(dt);
+
         SFMLTon::GetWindow().clear();
-        SFMLTon::GetWindow().draw(shape);
+        //game.Draw();
         SFMLTon::GetWindow().display();
     }
 
