@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "GameObject.h"
 
+#ifdef OOD
+
 GameObject::GameObject()
 {
 	m_tag = Tags::DEFAULT;
@@ -57,3 +59,5 @@ const bool RenderObject::IsColliding(RenderObject& other)
 {
 	return m_shape.getGlobalBounds().intersects(other.GetBounds());
 }
+
+#endif

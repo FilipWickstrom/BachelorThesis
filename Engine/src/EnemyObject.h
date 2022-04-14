@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+#ifdef OOD
+
 class EnemyObject : public RenderObject
 {
 private:
@@ -15,3 +17,5 @@ public:
 	// Inherited via RenderObject
 	virtual void Move(const float& dt) override;
 };
+
+#endif

@@ -10,8 +10,6 @@ enum class Tags : uint
 	PLAYER
 };
 
-#endif
-
 
 class GameObject
 {
@@ -61,3 +59,5 @@ public:
 	// Check for collision with other object.
 	const bool IsColliding(RenderObject& other);
 };
+
+#endif

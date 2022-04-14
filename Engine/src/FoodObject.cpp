@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "FoodObject.h"
 
+#ifdef OOD
+
 FoodObject::FoodObject()
 {
 	this->SetTag(Tags::GOOD);
@@ -20,3 +22,5 @@ void FoodObject::Move(const float& dt)
 {
 	// Doesn't move.
 }
+
+#endif

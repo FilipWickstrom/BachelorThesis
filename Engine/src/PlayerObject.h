@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+#ifdef OOD
+
 class PlayerObject : public RenderObject
 {
 private:
@@ -20,3 +22,5 @@ public:
 	const int& GetPoints() const;
 	void UpdateScale();
 };
+
+#endif

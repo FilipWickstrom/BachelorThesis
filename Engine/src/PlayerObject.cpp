@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "PlayerObject.h"
 
+#ifdef OOD
+
 PlayerObject::PlayerObject()
 {
 	sf::CircleShape shape(10.0f);
@@ -57,3 +59,5 @@ void PlayerObject::UpdateScale()
 
 	this->SetScale(m_scale);
 }
+
+#endif

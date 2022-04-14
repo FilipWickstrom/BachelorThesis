@@ -1,9 +1,12 @@
 #pragma once
 #include "Components.h"
 #include "ECS.h"
+
+#ifdef OOD
 #include "FoodObject.h"
 #include "PlayerObject.h"
 #include "EnemyObject.h"
+#endif
 
 #ifdef DOD
 class Game

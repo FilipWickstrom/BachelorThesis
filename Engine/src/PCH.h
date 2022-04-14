@@ -1,7 +1,7 @@
 #pragma once
 
-#define OOD
-//#define DOD
+//#define OOD
+#define DOD
 
 // Standard
 #include <iostream>

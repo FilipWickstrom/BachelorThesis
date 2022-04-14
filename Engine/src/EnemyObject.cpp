@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "EnemyObject.h"
 
+#ifdef OOD
+
 EnemyObject::EnemyObject()
 {
 	this->SetTag(Tags::BAD);
@@ -22,3 +24,5 @@ void EnemyObject::Move(const float& dt)
 
 	this->SetPosition(m_position);
 }
+
+#endif
