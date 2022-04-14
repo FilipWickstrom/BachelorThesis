@@ -61,7 +61,7 @@ int main()
 
         game.Update(dt);
 
-        //game.Draw();
+        game.Draw();
     }
 
     SFMLTon::GetWindow().close();

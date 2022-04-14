@@ -42,5 +42,22 @@ public:
 		return dynamic_cast<ComponentArray<T>*>(m_componentArrays.at(type).get())->GetArray();
 	}
 
+	template<typename T>
+	void View(std::function<void(T& component)> func)
+	{
+		// Assert that component actually exists.
+		size_t type = typeid(T).hash_code();
+		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+
+		// Get component array.
+		CompArray<T>& compArr = this->GetComponentArray<T>();
+
+		// do function over each component.
+		for (T& comp : compArr)
+		{
+			func(comp);
+		}
+	}
+
 };
 #endif

@@ -50,7 +50,7 @@ using ComponentType = std::uint8_t;
 
 const ComponentType MAX_COMPONENTS = 6;
 using Signature = std::bitset<MAX_COMPONENTS>;
-const Entity MAX_ENTITIES = 200000;
+const Entity MAX_ENTITIES = 200;
 #endif
 
 #ifdef OOD

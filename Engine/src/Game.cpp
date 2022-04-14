@@ -26,14 +26,27 @@ void Game::Init()
 
 void Game::Update(const float& dt)
 {
-    CompArray<Transform>& transforms = m_ecs.GetComponentArray<Transform>();
-    CompArray<Renderable>& renderables = m_ecs.GetComponentArray<Renderable>();
+    //CompArray<Transform>& transforms = m_ecs.GetComponentArray<Transform>();
+    //CompArray<Renderable>& renderables = m_ecs.GetComponentArray<Renderable>();
 
+    //for (auto& entity : m_ecs.GetActiveEntities())
+    //{
+    //    transforms[entity].position.x += transforms[entity].velocity.x * dt;
+    //    transforms[entity].position.y += transforms[entity].velocity.y * dt;
+
+    //    renderables[entity].shape.setPosition(transforms[entity].position);
+    //}
+
+    m_ecs.View<Transform>([&](Transform& transform)
+        {
+            transform.position.x += transform.velocity.x * dt;
+            transform.position.y += transform.velocity.y * dt;
+        });
+
+    CompArray<Renderable>& renderables = m_ecs.GetComponentArray<Renderable>();
+    CompArray<Transform>& transforms = m_ecs.GetComponentArray<Transform>();
     for (auto& entity : m_ecs.GetActiveEntities())
     {
-        transforms[entity].position.x += transforms[entity].velocity.x * dt;
-        transforms[entity].position.y += transforms[entity].velocity.y * dt;
-
         renderables[entity].shape.setPosition(transforms[entity].position);
     }
 }
@@ -41,11 +54,10 @@ void Game::Update(const float& dt)
 void Game::Draw()
 {
     SFMLTon::GetWindow().clear();
-    CompArray<Renderable>& renderables = m_ecs.GetComponentArray<Renderable>();
-    for (auto& entity : m_ecs.GetActiveEntities())
-    {
-        SFMLTon::GetWindow().draw(renderables[entity].shape);
-    }
+    m_ecs.View<Renderable>([&](Renderable& rend)
+        {
+            SFMLTon::GetWindow().draw(rend.shape);
+        });
     SFMLTon::GetWindow().display();
 }
 #endif
