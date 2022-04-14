@@ -1,5 +1,7 @@
 #include "PCH.h"
-#define OOD     //OOD or DOD
+
+//Possible to switch between OOD or DOD
+#define DOD
 
 #ifdef OOD
 #include "GameOOD.h"
@@ -12,7 +14,6 @@ int main()
     srand(static_cast<unsigned int>(time(0)));
     sf::Clock clock;
 
-    //Init all gameobjects
 #ifdef OOD
     GameOOD game;
 #elif defined DOD

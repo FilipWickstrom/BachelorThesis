@@ -25,6 +25,8 @@ GameOOD::GameOOD()
 		std::unique_ptr<GameObject> food = std::make_unique<FoodObject>();
 		m_gameobjects.push_back(std::move(food));
 	}
+
+	m_gameOver = false;
 }
 
 void GameOOD::GetObjectsWithTag(const ETagType& tag, std::vector<uint>& vec)
@@ -39,6 +41,8 @@ void GameOOD::GetObjectsWithTag(const ETagType& tag, std::vector<uint>& vec)
 
 void GameOOD::Update(const float& dt)
 {
+	if (m_gameOver) return;
+
 	//Update every object - mostly movement
 	for (auto& obj : m_gameobjects)
 		obj->Update(dt);
@@ -69,7 +73,8 @@ void GameOOD::Update(const float& dt)
 			//Check winconditions for players
 			if (playerObj->CheckWinCondition())
 			{
-				WINDOW.setTitle("You won the game!");
+				WINDOW.setTitle("You win the game!");
+				m_gameOver = true;
 			}
 
 			//Remove the food and tell garbage collector to clean up

@@ -6,6 +6,7 @@ class GameOOD
 private:
 	std::vector<std::unique_ptr<GameObject>> m_gameobjects;
 	uint									 m_playerID;
+	bool									 m_gameOver;
 
 public:
 	GameOOD();

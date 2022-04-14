@@ -11,8 +11,6 @@ PlayerObject::PlayerObject()
 	m_shape = std::make_unique<sf::CircleShape>(static_cast<float>(m_defaultSize));
 	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
 	m_shape->setFillColor(sf::Color::Blue);
-	m_shape->setOutlineColor(sf::Color::White);
-	m_shape->setOutlineThickness(1.f);
 }
 
 void PlayerObject::SetPoints(const int& points)

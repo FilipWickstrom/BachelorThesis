@@ -4,7 +4,7 @@
 EnemyObject::EnemyObject()
 	:GameObject(ETagType::enemy)
 {
-	m_movementSpeed = 50;
+	m_movementSpeed = 50.f;
 	m_velocity = { static_cast<float>(rand() % 3 - 1), static_cast<float>(rand() % 3 - 1)};
 	
 	m_shape = std::make_unique<sf::CircleShape>(10.f);
