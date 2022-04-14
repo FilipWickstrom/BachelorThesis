@@ -43,7 +43,6 @@ void Game::Update(const float& dt)
     std::vector<Entity>& entities = m_ecs.GetActiveEntities();
     Renderable& playerRenderable = m_ecs.renderables[m_playerEntity];
 
-    //SFMLTon::GetWindow().clear();
     // Loop through each entity.
     for (Entity entity : entities)
     {
@@ -54,8 +53,6 @@ void Game::Update(const float& dt)
         Renderable& renderable = m_ecs.renderables[entity];
         if (renderable.shouldRender)
         {
-            //SFMLTon::GetWindow().draw(renderable.shape);
-
             // Collision check between player and entity.
             if (playerRenderable.shape.getGlobalBounds().intersects(renderable.shape.getGlobalBounds()))
             {
@@ -85,7 +82,6 @@ void Game::Update(const float& dt)
     }
 
     // Player movement.
-    
     Transform& playerTransf = m_ecs.transforms[m_playerEntity];
     playerTransf.velocity = { 0.0f, 0.0f };
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -102,18 +98,27 @@ void Game::Update(const float& dt)
     // Update position.
     playerRenderable.shape.setPosition(playerTransf.position);
 
-    // Render.
     SFMLTon::GetView().setCenter({ playerTransf.position.x + playerTransf.scale.x, playerTransf.position.y + playerTransf.scale.y });
-    //SFMLTon::GetWindow().draw(playerRenderable.shape);
     SFMLTon::GetWindow().setView(SFMLTon::GetView());
-    //SFMLTon::GetWindow().display();
 }
 
 void Game::Draw()
 {
     SFMLTon::GetWindow().clear();
-    SFMLTon::GetWindow().display();
+    std::vector<Entity>& entities = m_ecs.GetActiveEntities();
+    for (Entity entity : entities)
+    {
+        Renderable& renderable = m_ecs.renderables[entity];
+        if (renderable.shouldRender)
+        {
+            SFMLTon::GetWindow().draw(renderable.shape);
+        }
+    }
 
+    Renderable& playerRenderable = m_ecs.renderables[m_playerEntity];
+    SFMLTon::GetWindow().draw(playerRenderable.shape);
+
+    SFMLTon::GetWindow().display();
 }
 #endif
 

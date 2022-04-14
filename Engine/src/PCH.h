@@ -1,8 +1,5 @@
 #pragma once
 
-//#define OOD
-#define DOD
-
 // Standard
 #include <iostream>
 #include <sstream>
@@ -43,6 +40,8 @@
 typedef unsigned int uint;
 typedef sf::Vector2f vec2;
 
+//#define OOD
+#define DOD
 
 #ifdef DOD
 // ECS
@@ -51,12 +50,12 @@ using ComponentType = std::uint8_t;
 
 const ComponentType MAX_COMPONENTS = 6;
 using Signature = std::bitset<MAX_COMPONENTS>;
-const Entity MAX_ENTITIES = 25000;
+const Entity MAX_ENTITIES = 200000;
 #endif
 
 #ifdef OOD
 
-const uint MAX_OBJECTS = 25000;
+const uint MAX_OBJECTS = 200000;
 
 #endif
 
