@@ -1,14 +1,7 @@
 #pragma once
+#ifdef DOD
 #include "Components.h"
 #include "ECS.h"
-
-#ifdef OOD
-#include "FoodObject.h"
-#include "PlayerObject.h"
-#include "EnemyObject.h"
-#endif
-
-#ifdef DOD
 class Game
 {
 private:
@@ -28,6 +21,9 @@ public:
 #endif
 
 #ifdef OOD
+#include "FoodObject.h"
+#include "PlayerObject.h"
+#include "EnemyObject.h"
 class Game
 {
 private:
