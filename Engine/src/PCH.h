@@ -32,8 +32,11 @@
 
 
 // EnTT
+#ifdef __unix__  
+#include "../../ThirdParty/EnTT/include/entt.hpp"
+#elif _WIN32
 #include <entt.hpp>
-
+#endif
 
 // type defs
 typedef unsigned int uint;
