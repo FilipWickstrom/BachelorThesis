@@ -87,10 +87,9 @@ void GameDOD::PlayerInputSystem(const float& dt)
 
 void GameDOD::EnemyMoveSystem(const float& dt)
 {
-	//[TODO] Exclude player if possible
-
-	const auto& view = m_registry.view<comp::Position, comp::Velocity>();
-	for (const auto& entity : view)
+	//Excluding player entity by using the score component
+	const auto& group = m_registry.view<comp::Position, comp::Velocity>(entt::exclude<comp::Score>);
+	for (const auto& entity : group)
 	{
 		auto& position = m_registry.get<comp::Position>(entity);
 		const auto& velocity = m_registry.get<comp::Velocity>(entity);
@@ -106,13 +105,12 @@ void GameDOD::CollisionSystem()
 	auto& playershape = m_registry.get<comp::CircleShape>(m_playerEnt);
 	auto& playerScore = m_registry.get<comp::Score>(m_playerEnt);
 
-	const auto& view = m_registry.view<comp::CircleShape, comp::Tag>();
-	for (const auto& entity : view)
+	//Excluding player entity by using the score component
+	const auto& group = m_registry.view<comp::CircleShape, comp::Tag>(entt::exclude<comp::Score>);
+	for (const auto& entity : group)
 	{
-		if (entity == m_playerEnt) return;	//[TODO] Fix this
-
-		auto& circleshape = m_registry.get<comp::CircleShape>(entity);
-		auto& tag = m_registry.get<comp::Tag>(entity);
+		const auto& circleshape = m_registry.get<comp::CircleShape>(entity);
+		const auto& tag = m_registry.get<comp::Tag>(entity);
 
 		if (playershape.shape.getGlobalBounds().intersects(circleshape.shape.getGlobalBounds()))
 		{
@@ -150,8 +148,8 @@ void GameDOD::CollisionSystem()
 
 void GameDOD::UpdateShapeSystem()
 {
-	const auto& view = m_registry.view<comp::Position, comp::CircleShape>();
-	for (const auto& entity : view)
+	const auto& group = m_registry.view<comp::Position, comp::CircleShape>();
+	for (const auto& entity : group)
 	{
 		const auto& poscomp = m_registry.get<comp::Position>(entity);
 		auto& circleshape = m_registry.get<comp::CircleShape>(entity);
