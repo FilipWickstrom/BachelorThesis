@@ -1,7 +1,10 @@
 #include "PCH.h"
+#include "Benchmark.h"
 
 //Possible to switch between OOD or DOD
 #define DOD
+
+
 
 #ifdef OOD
 #include "GameOOD.h"
@@ -20,11 +23,20 @@ int main()
     GameDOD game;
 #endif
 
+    //Benchmarking
+#if BENCH_DT
+    Benchmark benchmark;
+#endif // BENCH_DT
+
+
     while (WINDOW.isOpen())
     {
         float dt = clock.getElapsedTime().asSeconds();
-        //std::cout << "FPS: " << 1.f / dt << std::endl;
         clock.restart();
+
+#if BENCH_DT
+        benchmark.AddDT(dt);
+#endif
 
         sf::Event event;
         while (WINDOW.pollEvent(event))
@@ -33,11 +45,15 @@ int main()
                 WINDOW.close();
         }
 
-        //Benchmark start
         game.Update(dt);
-        //Benchmark end
         game.Render();
     }
+
+#if BENCH_DT
+    float averageDT = benchmark.GetAverageDT();
+    std::cout << "Average DT: " << averageDT << std::endl;
+    std::cout << "Average FPS: " << 1.f / averageDT << std::endl;
+#endif
 
     WINDOW.close();
     return 0;

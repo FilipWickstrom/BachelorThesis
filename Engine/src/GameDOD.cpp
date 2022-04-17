@@ -89,8 +89,8 @@ void GameDOD::EnemyMoveSystem(const float& dt)
 {
 	//[TODO] Exclude player if possible
 
-	auto view = m_registry.view<comp::Position, comp::Velocity>();
-	for (auto entity : view)
+	const auto& view = m_registry.view<comp::Position, comp::Velocity>();
+	for (const auto& entity : view)
 	{
 		auto& position = m_registry.get<comp::Position>(entity);
 		const auto& velocity = m_registry.get<comp::Velocity>(entity);
@@ -106,8 +106,8 @@ void GameDOD::CollisionSystem()
 	auto& playershape = m_registry.get<comp::CircleShape>(m_playerEnt);
 	auto& playerScore = m_registry.get<comp::Score>(m_playerEnt);
 
-	auto view = m_registry.view<comp::CircleShape, comp::Tag>();
-	for (auto entity : view)
+	const auto& view = m_registry.view<comp::CircleShape, comp::Tag>();
+	for (const auto& entity : view)
 	{
 		if (entity == m_playerEnt) return;	//[TODO] Fix this
 
@@ -150,8 +150,8 @@ void GameDOD::CollisionSystem()
 
 void GameDOD::UpdateShapeSystem()
 {
-	auto view = m_registry.view<comp::Position, comp::CircleShape>();
-	for (auto entity : view)
+	const auto& view = m_registry.view<comp::Position, comp::CircleShape>();
+	for (const auto& entity : view)
 	{
 		const auto& poscomp = m_registry.get<comp::Position>(entity);
 		auto& circleshape = m_registry.get<comp::CircleShape>(entity);
