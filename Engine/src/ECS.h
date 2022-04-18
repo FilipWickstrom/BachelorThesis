@@ -90,9 +90,10 @@ public:
 		// reference to the active entities.
 		auto& entities = this->GetActiveEntities();
 
+		int i;
 		// do function over each component.
-		#pragma omp parallel for
-		for (int i = 0; i < (int)entities.size(); i++)
+		#pragma omp parallel for default(none) shared(entities, compArr, compArr2) schedule(static) private(i)
+		for (i = 0; i < (int)entities.size(); i++)
 		{
 			func(compArr[entities[i]]);
 		}
@@ -112,9 +113,10 @@ public:
 		// reference to the active entities.
 		auto& entities = this->GetActiveEntities();
 
+		int i;
 		// do function over each component.
-		#pragma omp parallel for
-		for (int i = 0; i < (int)entities.size(); i++)
+		#pragma omp parallel for default(none) shared(entities, compArr, compArr2) schedule(static) private(i)
+		for (i = 0; i < (int)entities.size(); i++)
 		{
 			func(compArr[entities[i]], compArr2[entities[i]]);
 		}
