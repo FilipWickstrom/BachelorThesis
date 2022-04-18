@@ -92,7 +92,7 @@ public:
 
 		int i;
 		// do function over each component.
-		#pragma omp parallel for default(none) shared(entities, compArr, compArr2) schedule(static) private(i)
+		#pragma omp parallel for default(none) shared(entities, compArr) schedule(static) private(i)
 		for (i = 0; i < (int)entities.size(); i++)
 		{
 			func(compArr[entities[i]]);
