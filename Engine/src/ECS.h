@@ -12,12 +12,6 @@ private:
 
 	std::unordered_map<size_t, std::shared_ptr<IComponentArray>> m_componentArrays{};
 
-	template<typename ...Args, typename F>
-	void ForEach(Args&& ... multiple, F func)
-	{
-
-	}
-
 public:
 	ECS();
 	~ECS() = default;
@@ -80,6 +74,49 @@ public:
 		for (auto& entity : this->GetActiveEntities())
 		{
 			func(compArr[entity], compArr2[entity]);
+		}
+	}
+
+	template<typename A, typename F>
+	void ForEach_mult(F func)
+	{
+		// Assert that component actually exists.
+		size_t type = typeid(A).hash_code();
+		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+
+		// Get component array.
+		CompArray<A>& compArr = this->GetComponentArray<A>();
+
+		// reference to the active entities.
+		auto& entities = this->GetActiveEntities();
+
+		// do function over each component.
+		#pragma omp parallel for
+		for (int i = 0; i < (int)entities.size(); i++)
+		{
+			func(compArr[entities[i]]);
+		}
+	}
+
+	template<typename A, typename B, typename F>
+	void ForEach_mult(F func)
+	{
+		// Assert that component actually exists.
+		size_t type = typeid(A).hash_code();
+		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+
+		// Get component array.
+		CompArray<A>& compArr = this->GetComponentArray<A>();
+		CompArray<B>& compArr2 = this->GetComponentArray<B>();
+
+		// reference to the active entities.
+		auto& entities = this->GetActiveEntities();
+
+		// do function over each component.
+		#pragma omp parallel for
+		for (int i = 0; i < (int)entities.size(); i++)
+		{
+			func(compArr[entities[i]], compArr2[entities[i]]);
 		}
 	}
 

@@ -26,34 +26,13 @@ void Game::Init()
 
 void Game::Update(const float& dt)
 {
-    //CompArray<Transform>& transforms = m_ecs.GetComponentArray<Transform>();
-    //CompArray<Renderable>& renderables = m_ecs.GetComponentArray<Renderable>();
-
-    //for (auto& entity : m_ecs.GetActiveEntities())
-    //{
-    //    transforms[entity].position.x += transforms[entity].velocity.x * dt;
-    //    transforms[entity].position.y += transforms[entity].velocity.y * dt;
-
-    //    renderables[entity].shape.setPosition(transforms[entity].position);
-    //}
-
- /*   m_ecs.View<Transform>([&](Transform& transform)
-        {
-
-        });*/
-
-    m_ecs.ForEach<Transform>([&](Transform& transform)
+    m_ecs.ForEach_mult<Transform, Renderable>([&](Transform& transform, Renderable& rend)
         {
             transform.position.x += transform.velocity.x * dt;
             transform.position.y += transform.velocity.y * dt;
-        });
-
-    CompArray<Renderable>& renderables = m_ecs.GetComponentArray<Renderable>();
-    CompArray<Transform>& transforms = m_ecs.GetComponentArray<Transform>();
-    for (auto& entity : m_ecs.GetActiveEntities())
-    {
-        renderables[entity].shape.setPosition(transforms[entity].position);
-    }
+            rend.shape.setPosition(transform.position);
+        }
+    );
 }
 
 void Game::Draw()
