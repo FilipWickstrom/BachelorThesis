@@ -91,8 +91,8 @@ void GameDOD::Update(const float& dt)
 		Update every other entities position and check collision with player
 	*/
 	//Avoids the player by execluding score
-	const auto& group = m_registry.view<comp::CircleShape, comp::Transform, comp::Tag>(entt::exclude<comp::Score>);
-	for (const auto& entity : group)
+	const auto& view = m_registry.view<comp::CircleShape, comp::Transform, comp::Tag>(entt::exclude<comp::Score>);
+	for (const auto& entity : view)
 	{
 		auto& entPos	= m_registry.get<comp::Transform>(entity);
 		auto& entShape	= m_registry.get<comp::CircleShape>(entity);

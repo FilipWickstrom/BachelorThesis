@@ -20,10 +20,9 @@ int main()
     GameDOD game;
 #endif
 
-    //Benchmarking
 #if BENCH_DT
     Benchmark benchmark;
-#endif // BENCH_DT
+#endif
 
 
     while (WINDOW.isOpen())

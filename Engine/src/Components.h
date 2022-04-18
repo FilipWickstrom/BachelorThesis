@@ -13,15 +13,6 @@ namespace comp
 			: position(pos), velocity(velo) {}
 	};
 
-	/*struct Velocity
-	{
-		float speed		= { 0.f };
-		vec2 direction	= {0.f, 0.f};
-
-		Velocity(const float& speed, const vec2& dir = {0.f, 0.f})
-			: speed(speed), direction(dir) {}
-	};*/
-
 	struct Score
 	{
 		int current	= 0;
