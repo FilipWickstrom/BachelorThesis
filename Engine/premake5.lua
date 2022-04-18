@@ -48,7 +48,8 @@ project "Game"
 		
 		["OOD/Objects"]		= { "**Object.*"},
 		["OOD"]				= { "**GameOOD.*"},
-		["DOD"]				= { "**GameDOD.*", "**Components.*"}	
+		["DOD"]				= { "**GameDOD.*", "**Components.*"},
+		["Benchmarking"]	= { "**Benchmark.*" }
     }
 
     filter {"system:windows"}

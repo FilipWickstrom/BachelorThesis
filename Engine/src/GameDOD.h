@@ -7,13 +7,6 @@ private:
 	entt::entity   m_playerEnt;
 	bool		   m_gameOver;
 
-private: 
-	void PlayerInputSystem(const float& dt);
-	void EnemyMoveSystem(const float& dt);
-	void CollisionSystem();
-	void UpdateShapeSystem();
-	bool GoalSystem();
-
 public:
 	GameDOD();
 	~GameDOD() = default;

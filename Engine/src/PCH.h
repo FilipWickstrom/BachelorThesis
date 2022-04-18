@@ -49,18 +49,26 @@ typedef sf::Vector2f vec2;
 // Other necessary stuff that is needed everywhere
 #include "Structures.h"
 
+
+/*
+	Adjustable values
+*/
+
 // Constants
 constexpr uint	WIN_WIDTH		= 1920;
 constexpr uint	WIN_HEIGHT		= 1080;
 
 // Game specific
-constexpr uint	NR_OF_ENEMIES	= 12500;
-constexpr uint	NR_OF_FOOD		= 12500;
-constexpr float SPAWNDENSITY	= 4.f;	//1 = everything fits within the window, 
+constexpr uint	NR_OF_ENEMIES	= 10000;
+constexpr uint	NR_OF_FOOD		= 10000;
+constexpr float SPAWNDENSITY	= 10.f;	//1 = everything fits within the window, 
 										//3 = 3 times the window size
 constexpr uint  GOALPOINTS		= 50;
 constexpr float PLAYERSPEED		= 250.f;
 
+// Implementation: OOD or DOD
+//#define OOD
+#define DOD
 
 // Benchmarking
 #define BENCH_DT 1

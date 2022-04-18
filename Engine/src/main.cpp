@@ -1,10 +1,7 @@
 #include "PCH.h"
+#if BENCH_DT
 #include "Benchmark.h"
-
-//Possible to switch between OOD or DOD
-#define DOD
-
-
+#endif 
 
 #ifdef OOD
 #include "GameOOD.h"

@@ -3,23 +3,24 @@
 
 namespace comp
 {
-	struct Position
+	struct Transform
 	{
 		vec2 position	= {0.f, 0.f};
+		vec2 velocity   = {0.f, 0.f};
 		
-		Position() = default;
-		Position(const vec2& pos)
-			: position(pos) {}
+		Transform() = default;
+		Transform(const vec2& pos, const vec2& velo = {0.f, 0.f})
+			: position(pos), velocity(velo) {}
 	};
 
-	struct Velocity
+	/*struct Velocity
 	{
 		float speed		= { 0.f };
 		vec2 direction	= {0.f, 0.f};
 
 		Velocity(const float& speed, const vec2& dir = {0.f, 0.f})
 			: speed(speed), direction(dir) {}
-	};
+	};*/
 
 	struct Score
 	{
@@ -53,11 +54,12 @@ namespace comp
 		sf::CircleShape shape;
 
 		CircleShape() = default;
-		CircleShape(const float& radius, const sf::Color& color)
+		CircleShape(const float& radius, const sf::Color& color, const vec2& pos)
 		{
 			shape.setRadius(radius);
 			shape.setFillColor(color);
 			shape.setOrigin(shape.getLocalBounds().width / 2.f, shape.getLocalBounds().height / 2.f);
+			shape.setPosition(pos);
 		}
 	};
 }

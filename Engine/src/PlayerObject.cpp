@@ -13,7 +13,7 @@ PlayerObject::PlayerObject()
 	m_shape->setFillColor(sf::Color::Blue);
 }
 
-void PlayerObject::SetPoints(const int& points)
+void PlayerObject::AddPoints(const int& points)
 {
 	m_points += points;
 	if (m_points < 0)
@@ -22,13 +22,16 @@ void PlayerObject::SetPoints(const int& points)
 	sf::CircleShape* circleShape = dynamic_cast<sf::CircleShape*>(m_shape.get());
 	circleShape->setRadius(static_cast<float>(m_defaultSize + m_points));
 	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
-
 	WINDOW.setTitle("Points: " + std::to_string(m_points));
 }
 
-const int& PlayerObject::GetMaxPoints() const
+void PlayerObject::ResetPoints()
 {
-	return m_maxPoints;
+	m_points = 0;
+	sf::CircleShape* circleShape = dynamic_cast<sf::CircleShape*>(m_shape.get());
+	circleShape->setRadius(static_cast<float>(m_defaultSize));
+	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
+	WINDOW.setTitle("Points: " + std::to_string(m_points));
 }
 
 bool PlayerObject::CheckWinCondition()
