@@ -37,7 +37,12 @@ void Game::Update(const float& dt)
     //    renderables[entity].shape.setPosition(transforms[entity].position);
     //}
 
-    m_ecs.View<Transform>([&](Transform& transform)
+ /*   m_ecs.View<Transform>([&](Transform& transform)
+        {
+
+        });*/
+
+    m_ecs.ForEach<Transform>([&](Transform& transform)
         {
             transform.position.x += transform.velocity.x * dt;
             transform.position.y += transform.velocity.y * dt;
@@ -54,7 +59,7 @@ void Game::Update(const float& dt)
 void Game::Draw()
 {
     SFMLTon::GetWindow().clear();
-    m_ecs.View<Renderable>([&](Renderable& rend)
+    m_ecs.ForEach<Renderable>([&](Renderable& rend)
         {
             SFMLTon::GetWindow().draw(rend.shape);
         });

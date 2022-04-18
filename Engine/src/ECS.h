@@ -12,6 +12,12 @@ private:
 
 	std::unordered_map<size_t, std::shared_ptr<IComponentArray>> m_componentArrays{};
 
+	template<typename ...Args, typename F>
+	void ForEach(Args&& ... multiple, F func)
+	{
+
+	}
+
 public:
 	ECS();
 	~ECS() = default;
@@ -42,20 +48,38 @@ public:
 		return dynamic_cast<ComponentArray<T>*>(m_componentArrays.at(type).get())->GetArray();
 	}
 
-	template<typename T>
-	void View(std::function<void(T& component)> func)
+	template<typename A, typename F>
+	void ForEach(F func)
 	{
 		// Assert that component actually exists.
-		size_t type = typeid(T).hash_code();
+		size_t type = typeid(A).hash_code();
 		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
-		CompArray<T>& compArr = this->GetComponentArray<T>();
+		CompArray<A>& compArr = this->GetComponentArray<A>();
 
 		// do function over each component.
-		for (T& comp : compArr)
+		for (auto& entity : this->GetActiveEntities())
 		{
-			func(comp);
+			func(compArr[entity]);
+		}
+	}
+
+	template<typename A, typename B, typename F>
+	void ForEach(F func)
+	{
+		// Assert that component actually exists.
+		size_t type = typeid(A).hash_code();
+		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+
+		// Get component array.
+		CompArray<A>& compArr = this->GetComponentArray<A>();
+		CompArray<B>& compArr2 = this->GetComponentArray<B>();
+
+		// do function over each component.
+		for (auto& entity : this->GetActiveEntities())
+		{
+			func(compArr[entity], compArr2[entity]);
 		}
 	}
 
