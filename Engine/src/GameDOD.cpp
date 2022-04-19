@@ -62,7 +62,7 @@ bool GameDOD::CheckCollision(const vec2& pos1, const vec2& pos2, const float& ra
 {
 	float xdist = pos2.x - pos1.x;
 	float ydist = pos2.y - pos1.y;
-	float distance = std::sqrtf(xdist * xdist + ydist * ydist);
+	float distance = std::sqrt(xdist * xdist + ydist * ydist);
 
 	if (distance < rad1 + rad2)
 		return true;

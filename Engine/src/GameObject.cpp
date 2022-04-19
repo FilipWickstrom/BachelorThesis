@@ -20,7 +20,7 @@ bool GameObject::IsColliding(const GameObject& obj) const
 	
 	float xdist = pos2.x - pos1.x;
 	float ydist = pos2.y - pos1.y;
-	float distance = std::sqrtf(xdist * xdist + ydist * ydist);
+	float distance = std::sqrt(xdist * xdist + ydist * ydist);
 
 	if (distance < this->GetCollisionRadius() + obj.GetCollisionRadius())
 		return true;
