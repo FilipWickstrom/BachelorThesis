@@ -42,7 +42,7 @@ void RenderObject::SetPosition(const vec2& pos)
 void RenderObject::SetScale(const vec2& scale)
 {
 	m_scale = scale;
-	m_shape.setScale(m_scale);
+	m_shape.setRadius(m_scale.x);
 }
 
 const sf::FloatRect& RenderObject::GetBounds() const
@@ -57,7 +57,22 @@ void RenderObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 const bool RenderObject::IsColliding(RenderObject& other)
 {
-	return m_shape.getGlobalBounds().intersects(other.GetBounds());
+	vec2 pos1 = m_shape.getPosition();
+	vec2 pos2 = other.GetPosition();
+
+	float xdist = pos2.x - pos1.x;
+	float ydist = pos2.y - pos1.y;
+	float distance = std::sqrtf(xdist * xdist + ydist * ydist);
+
+	if (distance < m_shape.getRadius() + other.m_shape.getRadius())
+	{
+		return true;
+	}
+
+	return false;
+
+
+	//return m_shape.getGlobalBounds().intersects(other.GetBounds());
 }
 
 #endif

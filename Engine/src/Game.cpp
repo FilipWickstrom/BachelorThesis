@@ -100,11 +100,13 @@ void Game::Update(const float& dt)
             case Tags::BAD:
             {
                 m_player.RemovePoints(1);
+                m_objects.erase(m_objects.begin() + i);
                 break;
             }
             case Tags::GOOD:
             {
                 m_player.AddPoints(1);
+                m_objects.erase(m_objects.begin() + i);
                 break;
             }
             default:
@@ -115,7 +117,10 @@ void Game::Update(const float& dt)
         }
     }
 
-    SFMLTon::GetView().setCenter(m_player.GetPosition());
+
+    vec2 center = { m_player.GetPosition().x + m_player.GetScale().x, m_player.GetPosition().y + m_player.GetScale().y };
+
+    SFMLTon::GetView().setCenter(center);
     SFMLTon::GetWindow().setView(SFMLTon::GetView());
 }
 

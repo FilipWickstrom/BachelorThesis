@@ -39,6 +39,5 @@ public:
 	void Init();
 	void Update(const float& dt);
 	void Draw();
-
 };
 #endif

@@ -40,10 +40,9 @@
 typedef unsigned int uint;
 typedef sf::Vector2f vec2;
 
-//#define OOD
-#define DOD
+#define OOD
+//#define DOD
 
-#ifdef DOD
 // ECS
 using Entity = std::uint32_t;
 using ComponentType = std::uint8_t;
@@ -51,7 +50,9 @@ using ComponentType = std::uint8_t;
 const ComponentType MAX_COMPONENTS = 6;
 using Signature = std::bitset<MAX_COMPONENTS>;
 const Entity MAX_ENTITIES = 100000;
-#endif
+
+template<typename T>
+using CompArray = std::array<T, MAX_ENTITIES>;
 
 #ifdef OOD
 
@@ -62,5 +63,3 @@ const uint MAX_OBJECTS = 200000;
 const uint WINDOW_WIDTH = 1920;
 const uint WINDOW_HEIGHT = 1080;
 
-template<typename T>
-using CompArray = std::array<T, MAX_ENTITIES>;
