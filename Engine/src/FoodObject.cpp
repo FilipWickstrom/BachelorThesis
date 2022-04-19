@@ -12,8 +12,8 @@ FoodObject::FoodObject()
 
 	this->SetShape(shape);
 
-	float x = rand() % 5000 - 2500;
-	float y = rand() % 5000 - 2500;
+	float x = rand() % 5000 - 2500.f;
+	float y = rand() % 5000 - 2500.f;
 
 	this->SetPosition({x, y});
 }

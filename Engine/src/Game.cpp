@@ -105,7 +105,7 @@ void Game::Update(const float& dt)
                     if (playerScore.worth < 1)
                         playerScore.worth = 1;
 
-                    playerRend.shape.setRadius(playerScore.worth);
+                    playerRend.shape.setRadius(static_cast<float>(playerScore.worth));
                 }
             }
         });

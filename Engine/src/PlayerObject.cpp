@@ -54,8 +54,8 @@ const int& PlayerObject::GetPoints() const
 
 void PlayerObject::UpdateScale()
 {
-	m_scale.x = m_score;
-	m_scale.y = m_score;
+	m_scale.x = static_cast<float>(m_score);
+	m_scale.y = static_cast<float>(m_score);
 
 	this->SetScale(m_scale);
 }

@@ -51,7 +51,7 @@ public:
 
 
 	void SetScale(const vec2& scale);
-	const sf::FloatRect& GetBounds() const;
+	const sf::FloatRect GetBounds() const;
 
 	// Inherited via Drawable
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

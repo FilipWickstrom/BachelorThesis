@@ -45,7 +45,7 @@ void RenderObject::SetScale(const vec2& scale)
 	m_shape.setRadius(m_scale.x);
 }
 
-const sf::FloatRect& RenderObject::GetBounds() const
+const sf::FloatRect RenderObject::GetBounds() const
 {
 	return m_shape.getGlobalBounds();
 }

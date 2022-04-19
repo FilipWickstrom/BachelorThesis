@@ -8,7 +8,7 @@ class EnemyObject : public RenderObject
 private:
 
 	int damage = 1;
-	vec2 m_velo = {rand() % 32 - 16, rand() % 32 - 16};
+	vec2 m_velo = {rand() % 32 - 16.f, rand() % 32 - 16.f};
 
 public:
 
