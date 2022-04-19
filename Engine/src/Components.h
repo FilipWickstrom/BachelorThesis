@@ -13,6 +13,17 @@ namespace comp
 			: position(pos), velocity(velo) {}
 	};
 
+	struct Collider
+	{
+		float radius = 5.f;
+
+		Collider() = default;
+		Collider(const float& rad)
+		{
+			radius = std::abs(rad);
+		}
+	};
+
 	struct Score
 	{
 		int current	= 0;
@@ -47,7 +58,8 @@ namespace comp
 		CircleShape() = default;
 		CircleShape(const float& radius, const sf::Color& color, const vec2& pos)
 		{
-			shape.setRadius(radius);
+			float rad = std::abs(radius);
+			shape.setRadius(rad);
 			shape.setFillColor(color);
 			shape.setOrigin(shape.getLocalBounds().width / 2.f, shape.getLocalBounds().height / 2.f);
 			shape.setPosition(pos);

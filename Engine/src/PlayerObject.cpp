@@ -11,6 +11,7 @@ PlayerObject::PlayerObject()
 	m_shape = std::make_unique<sf::CircleShape>(static_cast<float>(m_defaultSize));
 	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
 	m_shape->setFillColor(sf::Color::Blue);
+	SetCollisionRadius(static_cast<float>(m_defaultSize));
 }
 
 void PlayerObject::AddPoints(const int& points)
@@ -21,6 +22,7 @@ void PlayerObject::AddPoints(const int& points)
 
 	sf::CircleShape* circleShape = dynamic_cast<sf::CircleShape*>(m_shape.get());
 	circleShape->setRadius(static_cast<float>(m_defaultSize + m_points));
+	SetCollisionRadius(static_cast<float>(m_defaultSize + m_points));
 	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
 	WINDOW.setTitle("Points: " + std::to_string(m_points));
 }
@@ -30,6 +32,7 @@ void PlayerObject::ResetPoints()
 	m_points = 0;
 	sf::CircleShape* circleShape = dynamic_cast<sf::CircleShape*>(m_shape.get());
 	circleShape->setRadius(static_cast<float>(m_defaultSize));
+	SetCollisionRadius(static_cast<float>(m_defaultSize));
 	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
 	WINDOW.setTitle("Points: " + std::to_string(m_points));
 }

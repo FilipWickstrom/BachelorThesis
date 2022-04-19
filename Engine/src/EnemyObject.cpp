@@ -8,6 +8,7 @@ EnemyObject::EnemyObject()
 	m_velocity = { static_cast<float>(rand() % 3 - 1), static_cast<float>(rand() % 3 - 1)};
 	
 	m_shape = std::make_unique<sf::CircleShape>(10.f);
+	SetCollisionRadius(10.f);
 	m_shape->setOrigin(m_shape->getLocalBounds().width / 2.f, m_shape->getLocalBounds().height / 2.f);
 	m_shape->setFillColor(sf::Color::Magenta);
 

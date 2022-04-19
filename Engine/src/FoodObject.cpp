@@ -6,6 +6,7 @@ FoodObject::FoodObject()
 {
 	m_worth = rand() % 11 + 5;
 	m_shape = std::make_unique<sf::CircleShape>(static_cast<float>(m_worth));
+	SetCollisionRadius(static_cast<float>(m_worth));
 
 	// Randomize to be good or bad
 	int posOrNeg = rand() % 2;	//0 or 1
@@ -32,6 +33,7 @@ FoodObject::FoodObject()
 		(rand() % WIN_WIDTH * SPAWNDENSITY	- WIN_WIDTH)	+ WIN_WIDTH,
 		(rand() % WIN_HEIGHT * SPAWNDENSITY - WIN_HEIGHT)	+ WIN_HEIGHT
 	);
+
 }
 
 const int& FoodObject::GetWorth() const

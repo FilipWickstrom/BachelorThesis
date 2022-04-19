@@ -3,6 +3,7 @@
 #include "Components.h"
 
 
+
 GameDOD::GameDOD()
 {
 	//Create a player
@@ -11,6 +12,7 @@ GameDOD::GameDOD()
 	const auto& poscomp = m_registry.emplace<comp::Transform>(m_playerEnt, vec2(WIN_WIDTH / 2.f, WIN_HEIGHT / 2.f));
 	m_registry.emplace<comp::Score>(m_playerEnt, 0, GOALPOINTS);
 	m_registry.emplace<comp::CircleShape>(m_playerEnt, 10.f, sf::Color::Blue, poscomp.position);
+	m_registry.emplace<comp::Collider>(m_playerEnt, 10.f);
 
 
 	//Create enemies
@@ -26,6 +28,7 @@ GameDOD::GameDOD()
 		
 		m_registry.emplace<comp::Transform>(enemyEnt, position, velocity);
 		m_registry.emplace<comp::CircleShape>(enemyEnt, 10.f, sf::Color::Magenta, position);
+		m_registry.emplace<comp::Collider>(enemyEnt, 10.f);
 	}
 
 
@@ -49,18 +52,32 @@ GameDOD::GameDOD()
 		m_registry.emplace<comp::Worth>(foodEnt, worth);
 		m_registry.emplace<comp::Tag>(foodEnt, tag);
 		m_registry.emplace<comp::CircleShape>(foodEnt, static_cast<float>(worth), color, position);
+		m_registry.emplace<comp::Collider>(foodEnt, static_cast<float>(worth));
 	}
 
 	m_gameOver = false;
+}
+
+bool GameDOD::CheckCollision(const vec2& pos1, const vec2& pos2, const float& rad1, const float& rad2)
+{
+	float xdist = pos2.x - pos1.x;
+	float ydist = pos2.y - pos1.y;
+	float distance = std::sqrtf(xdist * xdist + ydist * ydist);
+
+	if (distance < rad1 + rad2)
+		return true;
+
+	return false;
 }
 
 void GameDOD::Update(const float& dt)
 {
 	if (m_gameOver) return;
 
-	auto& playerTrans	= m_registry.get<comp::Transform>(m_playerEnt);
-	auto& playerShape	= m_registry.get<comp::CircleShape>(m_playerEnt);
-	auto& playerScore	= m_registry.get<comp::Score>(m_playerEnt);
+	auto& playerTrans		= m_registry.get<comp::Transform>(m_playerEnt);
+	auto& playerShape		= m_registry.get<comp::CircleShape>(m_playerEnt);
+	auto& playerScore		= m_registry.get<comp::Score>(m_playerEnt);
+	auto& playerCollider	= m_registry.get<comp::Collider>(m_playerEnt);
 
 	/*
 		Update player movement
@@ -91,12 +108,13 @@ void GameDOD::Update(const float& dt)
 		Update every other entities position and check collision with player
 	*/
 	//Avoids the player by execluding score
-	const auto& view = m_registry.view<comp::CircleShape, comp::Transform, comp::Tag>(entt::exclude<comp::Score>);
+	const auto& view = m_registry.view<comp::CircleShape, comp::Transform, comp::Tag, comp::Collider>(entt::exclude<comp::Score>);
 	for (const auto& entity : view)
 	{
-		auto& entPos	= m_registry.get<comp::Transform>(entity);
-		auto& entShape	= m_registry.get<comp::CircleShape>(entity);
-		auto& entTag	= m_registry.get<comp::Tag>(entity);
+		auto& entPos		= m_registry.get<comp::Transform>(entity);
+		auto& entShape		= m_registry.get<comp::CircleShape>(entity);
+		auto& entTag		= m_registry.get<comp::Tag>(entity);
+		auto& entCollider	= m_registry.get<comp::Collider>(entity);
 
 		//Move the entity
 		entPos.position += { entPos.velocity.x * dt,
@@ -105,7 +123,8 @@ void GameDOD::Update(const float& dt)
 
 
 		//Check collision
-		if (playerShape.shape.getGlobalBounds().intersects(entShape.shape.getGlobalBounds()))
+		//if (playerShape.shape.getGlobalBounds().intersects(entShape.shape.getGlobalBounds()))					//Expensive
+		if (CheckCollision(playerTrans.position, entPos.position, playerCollider.radius, entCollider.radius))	//Cheaper
 		{
 			switch (entTag.type)
 			{
@@ -114,6 +133,7 @@ void GameDOD::Update(const float& dt)
 				playerScore.current = 0;
 				WINDOW.setTitle("Points: " + std::to_string(playerScore.current));
 				playerShape.shape.setRadius(playerScore.current + 10.f);
+				playerCollider.radius = playerScore.current + 10.f;
 				playerShape.shape.setOrigin(playerShape.shape.getLocalBounds().width / 2.f,
 											playerShape.shape.getLocalBounds().height / 2.f);
 				break;
@@ -143,6 +163,7 @@ void GameDOD::Update(const float& dt)
 
 				WINDOW.setTitle("Points: " + std::to_string(playerScore.current));
 				playerShape.shape.setRadius(playerScore.current + 10.f);
+				playerCollider.radius = playerScore.current + 10.f;
 				playerShape.shape.setOrigin(playerShape.shape.getLocalBounds().width / 2.f,
 											playerShape.shape.getLocalBounds().height / 2.f);
 
