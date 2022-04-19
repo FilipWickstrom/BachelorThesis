@@ -9,6 +9,10 @@ struct Transform
 	vec2 scale = { 1.0f, 1.0f };
 
 	Transform() = default;
+	Transform(float velo)
+	{
+		this->velocity = { velo, velo };
+	}
 };
 
 enum class Tags : uint8_t

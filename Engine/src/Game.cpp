@@ -17,32 +17,128 @@ void Game::Init()
 {
     m_ecs.RegisterComponent(Transform());
     m_ecs.RegisterComponent(Renderable());
+    m_ecs.RegisterComponent(Value());
+    m_ecs.RegisterComponent(Tag());
 
-    for (int i = 0; i < MAX_ENTITIES; i++)
+    m_playerEntity = m_ecs.CreateEntity();
+    m_ecs.SetComponent(m_playerEntity, Renderable(sf::Color::Blue));
+
+    for (int i = 1; i < MAX_ENTITIES; i++)
     {
         Entity entity = m_ecs.CreateEntity();
+
+        if (i % 2 == 0)
+        {
+            m_ecs.SetComponent(entity, Tag(Tags::BAD));
+            m_ecs.SetComponent(entity, Renderable(sf::Color::Red));
+        }
+        else
+        {
+            m_ecs.SetComponent(entity, Tag(Tags::GOOD));
+            m_ecs.SetComponent(entity, Renderable(sf::Color::Green));
+            m_ecs.SetComponent(entity, Transform(0.0f));
+        }
     }
 }
 
 void Game::Update(const float& dt)
 {
-    m_ecs.ForEach_mult<Transform, Renderable>([&](Transform& transform, Renderable& rend)
+    Renderable& playerRend = m_ecs.GetComponentArray<Renderable>().at(m_playerEntity);
+    Value& playerScore = m_ecs.GetComponentArray<Value>().at(m_playerEntity);
+    Transform& transform = m_ecs.GetComponentArray<Transform>().at(m_playerEntity);
+
+    transform.velocity = { 0.0f, 0.0f };
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+            transform.velocity.y = -100.0f;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+            transform.velocity.y = 100.0f;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+            transform.velocity.x = -100.0f;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+            transform.velocity.x = 100.0f;
+    }
+
+    transform.position.x += transform.velocity.x * dt;
+    transform.position.y += transform.velocity.y * dt;
+    transform.velocity = { 0.0f, 0.0f };
+    playerRend.shape.setPosition(transform.position);
+
+
+    m_ecs.ForEach_mult<Transform, Renderable, Tag>([&](Entity entity, Transform& transform, Renderable& rend, const Tag& tag)
         {
             transform.position.x += transform.velocity.x * dt;
             transform.position.y += transform.velocity.y * dt;
             rend.shape.setPosition(transform.position);
+
+            if (rend.shouldRender == 1)
+            {
+                if (IsColliding(rend.shape, playerRend.shape))
+                {
+                    switch (tag.tag)
+                    {
+                    case Tags::GOOD:
+                    {
+                        playerScore.worth++;
+                        rend.shouldRender = 0;
+                        break;
+                    }
+                    case Tags::BAD:
+                    {
+                        playerScore.worth--;
+                        rend.shouldRender = 0;
+                        break;
+                    }
+                    default:
+                        break;
+                    }
+
+                    if (playerScore.worth < 1)
+                        playerScore.worth = 1;
+
+                    playerRend.shape.setRadius(playerScore.worth);
+                }
+            }
         }
     );
+
+    SFMLTon::GetView().setCenter(playerRend.shape.getPosition());
+
+    SFMLTon::GetWindow().setView(SFMLTon::GetView());
 }
 
 void Game::Draw()
 {
     SFMLTon::GetWindow().clear();
-    m_ecs.ForEach<Renderable>([&](Renderable& rend)
+    m_ecs.ForEach<Renderable>([&](Entity entity, Renderable& rend)
         {
-            SFMLTon::GetWindow().draw(rend.shape);
+            if(rend.shouldRender)
+                SFMLTon::GetWindow().draw(rend.shape);
         });
     SFMLTon::GetWindow().display();
+}
+bool Game::IsColliding(const sf::CircleShape& first, const sf::CircleShape& second)
+{
+    const vec2& pos1 = first.getPosition();
+    const vec2& pos2 = second.getPosition();
+
+    float xdist = pos2.x - pos1.x;
+    float ydist = pos2.y - pos1.y;
+    float distance = std::sqrtf(xdist * xdist + ydist * ydist);
+
+    if (distance < first.getRadius() + second.getRadius())
+    {
+        return true;
+    }
+
+    return false;
 }
 #endif
 

@@ -19,6 +19,17 @@ public:
 	Entity CreateEntity();
 	void DestroyEntity(const Entity& entity);
 
+	template<typename T>
+	void SetComponent(const Entity& entity, const T& component)
+	{
+		size_t type = typeid(T).hash_code();
+
+		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component isn't reigstered.");
+
+		auto& compArr = this->GetComponentArray<T>();
+		compArr[entity] = component;
+	}
+
 	std::vector<Entity>& GetActiveEntities();
 
 	template<typename T>
@@ -55,7 +66,7 @@ public:
 		// do function over each component.
 		for (auto& entity : this->GetActiveEntities())
 		{
-			func(compArr[entity]);
+			func(entity, compArr[entity]);
 		}
 	}
 
@@ -73,7 +84,26 @@ public:
 		// do function over each component.
 		for (auto& entity : this->GetActiveEntities())
 		{
-			func(compArr[entity], compArr2[entity]);
+			func(entity, compArr[entity], compArr2[entity]);
+		}
+	}
+
+	template<typename A, typename B, typename C, typename F>
+	void ForEach(F func)
+	{
+		// Assert that component actually exists.
+		size_t type = typeid(A).hash_code();
+		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+
+		// Get component array.
+		CompArray<A>& compArr = this->GetComponentArray<A>();
+		CompArray<B>& compArr2 = this->GetComponentArray<B>();
+		CompArray<C>& compArr3 = this->GetComponentArray<C>();
+
+		// do function over each component.
+		for (auto& entity : this->GetActiveEntities())
+		{
+			func(entity, compArr[entity], compArr2[entity], compArr3[entity]);
 		}
 	}
 
@@ -95,7 +125,7 @@ public:
 		#pragma omp parallel for default(none) shared(entities, compArr) schedule(static) private(i)
 		for (i = 0; i < (int)entities.size(); i++)
 		{
-			func(compArr[entities[i]]);
+			func(entities[i], compArr[entities[i]]);
 		}
 	}
 
@@ -118,7 +148,30 @@ public:
 		#pragma omp parallel for default(none) shared(entities, compArr, compArr2) schedule(static) private(i)
 		for (i = 0; i < (int)entities.size(); i++)
 		{
-			func(compArr[entities[i]], compArr2[entities[i]]);
+			func(entities[i], compArr[entities[i]], compArr2[entities[i]]);
+		}
+	}
+
+	template<typename A, typename B, typename C, typename F>
+	void ForEach_mult(F func)
+	{
+		// Assert that component actually exists.
+		size_t type = typeid(A).hash_code();
+		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+
+		// Get component array.
+		CompArray<A>& compArr = this->GetComponentArray<A>();
+		CompArray<B>& compArr2 = this->GetComponentArray<B>();
+		CompArray<C>& compArr3 = this->GetComponentArray<C>();
+
+		// reference to the active entities.
+		auto& entities = this->GetActiveEntities();
+
+		// do function over each component.
+		#pragma omp parallel for default(none) shared(entities, compArr, compArr2, compArr3) schedule(static)
+		for (int i = 0; i < (int)entities.size(); i++)
+		{
+			func(entities[i], compArr[entities[i]], compArr2[entities[i]], compArr3[entities[i]]);
 		}
 	}
 
