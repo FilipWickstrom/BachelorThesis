@@ -71,13 +71,15 @@ void Game::Update(const float& dt)
     transform.velocity = { 0.0f, 0.0f };
     playerRend.shape.setPosition(transform.position);
 
-
-    m_ecs.ForEach_mult<Transform, Renderable, Tag>([&](Entity entity, Transform& transform, Renderable& rend, const Tag& tag)
+    m_ecs.ForEach_mult<Transform>([&](Entity entity, Transform& transform)
         {
             transform.position.x += transform.velocity.x * dt;
             transform.position.y += transform.velocity.y * dt;
-            rend.shape.setPosition(transform.position);
+        }
+    );
 
+    m_ecs.ForEach_mult<Renderable, Tag>([&](Entity entity, Renderable& rend, Tag& tag)
+        {
             if (rend.shouldRender == 1)
             {
                 if (IsColliding(rend.shape, playerRend.shape))
@@ -106,19 +108,19 @@ void Game::Update(const float& dt)
                     playerRend.shape.setRadius(playerScore.worth);
                 }
             }
-        }
-    );
+        });
 
     SFMLTon::GetView().setCenter(playerRend.shape.getPosition());
-
     SFMLTon::GetWindow().setView(SFMLTon::GetView());
 }
 
 void Game::Draw()
 {
     SFMLTon::GetWindow().clear();
-    m_ecs.ForEach<Renderable>([&](Entity entity, Renderable& rend)
+    m_ecs.ForEach<Renderable, Transform>([&](Entity entity, Renderable& rend, Transform& transform)
         {
+            rend.shape.setPosition(transform.position);
+
             if(rend.shouldRender)
                 SFMLTon::GetWindow().draw(rend.shape);
         });
@@ -187,8 +189,10 @@ void Game::Update(const float& dt)
     {
         // Move the object.
         m_objects[i]->Move(dt);
+    }
 
-
+    for (int i = 1; i < (int)m_objects.size(); i++)
+    {
         if (m_player.IsColliding(*m_objects[i]))
         {
             switch (m_objects[i]->GetTag())
