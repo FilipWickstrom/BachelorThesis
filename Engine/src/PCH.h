@@ -42,6 +42,7 @@ typedef sf::Vector2f vec2;
 
 //#define OOD
 #define DOD
+#define MULTITHREADING 1	//On or off
 
 // ECS
 using Entity = std::uint32_t;
