@@ -40,8 +40,8 @@
 typedef unsigned int uint;
 typedef sf::Vector2f vec2;
 
-#define OOD
-//#define DOD
+//#define OOD
+#define DOD
 
 // ECS
 using Entity = std::uint32_t;
@@ -56,3 +56,7 @@ const uint MAX_OBJECTS = 200000;
 const uint WINDOW_WIDTH = 1920;
 const uint WINDOW_HEIGHT = 1080;
 
+
+// Benchmarking
+#define BENCH_DT 1
+#define CAPTURED_FRAMES_DT 1000 

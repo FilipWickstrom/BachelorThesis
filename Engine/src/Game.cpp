@@ -226,10 +226,12 @@ void Game::Update(const float& dt)
 
 void Game::Draw()
 {
+    SFMLTon::GetWindow().clear();
     for (int i = 0; i < (int)m_objects.size(); i++)
     {
         SFMLTon::GetWindow().draw(*m_objects[i]);
     }
+    SFMLTon::GetWindow().display();
 }
 
 #endif
