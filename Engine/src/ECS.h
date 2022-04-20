@@ -24,7 +24,7 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component isn't reigstered.");
+		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component isn't reigstered.");
 
 		auto& compArr = this->GetComponentArray<T>();
 		compArr[entity] = component;
@@ -37,7 +37,7 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		assert(m_componentArrays.find(type) != m_componentArrays.end() && "Component already exists.");
+		//assert(m_componentArrays.find(type) != m_componentArrays.end() && "Component already exists.");
 
 		m_componentArrays.insert({ type, std::make_shared<ComponentArray<T>>() });
 
@@ -48,7 +48,7 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		return dynamic_cast<ComponentArray<T>*>(m_componentArrays.at(type).get())->GetArray();
 	}
@@ -58,7 +58,7 @@ public:
 	{
 		// Assert that component actually exists.
 		size_t type = typeid(A).hash_code();
-		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
 		CompArray<A>& compArr = this->GetComponentArray<A>();
@@ -75,7 +75,7 @@ public:
 	{
 		// Assert that component actually exists.
 		size_t type = typeid(A).hash_code();
-		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
 		CompArray<A>& compArr = this->GetComponentArray<A>();
@@ -93,7 +93,7 @@ public:
 	{
 		// Assert that component actually exists.
 		size_t type = typeid(A).hash_code();
-		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
 		CompArray<A>& compArr = this->GetComponentArray<A>();
@@ -112,7 +112,7 @@ public:
 	{
 		// Assert that component actually exists.
 		size_t type = typeid(A).hash_code();
-		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
 		CompArray<A>& compArr = this->GetComponentArray<A>();
@@ -134,7 +134,7 @@ public:
 	{
 		// Assert that component actually exists.
 		size_t type = typeid(A).hash_code();
-		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
 		CompArray<A>& compArr = this->GetComponentArray<A>();
@@ -157,7 +157,7 @@ public:
 	{
 		// Assert that component actually exists.
 		size_t type = typeid(A).hash_code();
-		assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
+		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
 		CompArray<A>& compArr = this->GetComponentArray<A>();

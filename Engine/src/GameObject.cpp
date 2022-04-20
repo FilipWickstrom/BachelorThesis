@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "GameObject.h"
+#include <cmath>
 
 #ifdef OOD
 
@@ -62,7 +63,7 @@ const bool RenderObject::IsColliding(RenderObject& other)
 
 	float xdist = pos2.x - pos1.x;
 	float ydist = pos2.y - pos1.y;
-	float distance = std::sqrtf(xdist * xdist + ydist * ydist);
+	float distance = std::sqrt(xdist * xdist + ydist * ydist);
 
 	if (distance < m_shape.getRadius() + other.m_shape.getRadius())
 	{

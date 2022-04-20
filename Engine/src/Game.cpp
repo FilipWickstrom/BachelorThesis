@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "Game.h"
 #include "Components.h"
+#include <cmath>
 
 
 #ifdef DOD
@@ -143,7 +144,7 @@ bool Game::IsColliding(const sf::CircleShape& first, const sf::CircleShape& seco
 
     float xdist = pos2.x - pos1.x;
     float ydist = pos2.y - pos1.y;
-    float distance = std::sqrtf(xdist * xdist + ydist * ydist);
+    float distance = std::sqrt(xdist * xdist + ydist * ydist);
 
     if (distance < first.getRadius() + second.getRadius())
     {

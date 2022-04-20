@@ -52,7 +52,7 @@ const Entity MAX_ENTITIES = 200000;
 template<typename T>
 using CompArray = std::array<T, MAX_ENTITIES>;
 
-const uint MAX_OBJECTS = 200000;
+const uint MAX_OBJECTS = MAX_ENTITIES;
 
 const uint WINDOW_WIDTH = 1920;
 const uint WINDOW_HEIGHT = 1080;
