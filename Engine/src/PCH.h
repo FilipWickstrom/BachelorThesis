@@ -42,12 +42,12 @@ typedef sf::Vector2f vec2;
 
 //#define OOD
 #define DOD
-#define MULTITHREADING 1	//On or off
+#define MULTITHREADING 0	//On or off
 
 // ECS
 using Entity = std::uint32_t;
 
-const Entity MAX_ENTITIES = 200000;
+const Entity MAX_ENTITIES = 100000;
 
 template<typename T>
 using CompArray = std::array<T, MAX_ENTITIES>;

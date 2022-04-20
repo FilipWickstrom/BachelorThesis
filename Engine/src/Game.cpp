@@ -197,7 +197,7 @@ void Game::Update(const float& dt)
     m_player.Move(dt);
 
 #if MULTITHREADING
-    #pragma omp parallel for default(none) schedule(static)
+    #pragma omp parallel for schedule(static)
 #endif
     for (int i = 1; i < (int)m_objects.size(); i++)
     {
@@ -206,7 +206,7 @@ void Game::Update(const float& dt)
     }
 
 #if MULTITHREADING
-    #pragma omp parallel for default(none) schedule(static)
+    #pragma omp parallel for schedule(static)
 #endif
     for (int i = 1; i < (int)m_objects.size(); i++)
     {

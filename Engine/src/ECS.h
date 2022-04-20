@@ -122,7 +122,7 @@ public:
 
 		int i;
 		// do function over each component.
-		#pragma omp parallel for default(none) shared(entities, compArr) schedule(static) private(i)
+		#pragma omp parallel for shared(entities, compArr) schedule(static) private(i)
 		for (i = 0; i < (int)entities.size(); i++)
 		{
 			func(entities[i], compArr[entities[i]]);
@@ -145,7 +145,7 @@ public:
 
 		int i;
 		// do function over each component.
-		#pragma omp parallel for default(none) shared(entities, compArr, compArr2) schedule(static) private(i)
+		#pragma omp parallel for shared(entities, compArr, compArr2) schedule(static) private(i)
 		for (i = 0; i < (int)entities.size(); i++)
 		{
 			func(entities[i], compArr[entities[i]], compArr2[entities[i]]);
@@ -168,7 +168,7 @@ public:
 		auto& entities = this->GetActiveEntities();
 
 		// do function over each component.
-		#pragma omp parallel for default(none) shared(entities, compArr, compArr2, compArr3) schedule(static)
+		#pragma omp parallel for shared(entities, compArr, compArr2, compArr3) schedule(static)
 		for (int i = 0; i < (int)entities.size(); i++)
 		{
 			func(entities[i], compArr[entities[i]], compArr2[entities[i]], compArr3[entities[i]]);

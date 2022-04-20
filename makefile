@@ -14,15 +14,16 @@ SOURCE 	:= $(wildcard $(SOURCEPATH)/*.cpp)
 OBJECTS := $(patsubst %.cpp, %.o, $(SOURCE))	
 
 
-#Install on linux via: "sudo apt-get install libsfml-dev"
-DYNAMICLIBS = -lsfml-graphics -lsfml-window -lsfml-system
+#Install on linux via: 	"sudo apt-get install libsfml-dev"
+#Install openmp via:	"sudo apt-get install libomp-dev"
+DYNAMICLIBS = -lsfml-graphics -lsfml-window -lsfml-system -fopenmp
 
 
 game: $(OBJECTS)
 		$(CXX) $(CXXFLAGS) -o BachelorThesis $(OBJECTS) $(DYNAMICLIBS)
 
 $(SOURCEPATH)/%.o: $(SOURCEPATH)/%.cpp
-		$(CXX) $(CXXFLAGS) -c $< -o $@
+		$(CXX) $(CXXFLAGS) -c $< -o $@ -fopenmp
 
 
 clean:
