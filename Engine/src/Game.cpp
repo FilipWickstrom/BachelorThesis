@@ -73,9 +73,9 @@ void Game::Update(const float& dt)
 
 
 #if MULTITHREADING
-    m_ecs.ForEach_mult<Transform>([&](Entity entity, Transform& transform)
+    m_ecs.ForEach_mult<Transform>([&](Entity& entity, Transform& transform)
 #else
-    m_ecs.ForEach<Transform>([&](Entity entity, Transform& transform)
+    m_ecs.ForEach<Transform>([&](Entity& entity, Transform& transform)
 #endif
         {
             transform.position.x += transform.velocity.x * dt;
@@ -85,9 +85,9 @@ void Game::Update(const float& dt)
 
 
 #if MULTITHREADING
-    m_ecs.ForEach_mult<Renderable, Tag>([&](Entity entity, Renderable& rend, Tag& tag)
+    m_ecs.ForEach_mult<Renderable, Tag>([&](Entity& entity, Renderable& rend, Tag& tag)
 #else
-    m_ecs.ForEach<Renderable, Tag>([&](Entity entity, Renderable& rend, Tag& tag)
+    m_ecs.ForEach<Renderable, Tag>([&](Entity& entity, Renderable& rend, Tag& tag)
 #endif
         {
             if (rend.shouldRender == 1)
@@ -195,12 +195,18 @@ void Game::Update(const float& dt)
 {
     m_player.Move(dt);
 
+#if MULTITHREADING
+    #pragma omp parallel for default(none) schedule(static)
+#endif
     for (int i = 1; i < (int)m_objects.size(); i++)
     {
         // Move the object.
         m_objects[i]->Move(dt);
     }
 
+#if MULTITHREADING
+    #pragma omp parallel for default(none) schedule(static)
+#endif
     for (int i = 1; i < (int)m_objects.size(); i++)
     {
         if (m_player.IsColliding(*m_objects[i]))
