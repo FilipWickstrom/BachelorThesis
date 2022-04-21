@@ -41,12 +41,12 @@
 //#define OOD
 #define DOD
 #define MULTITHREADING	1			//On or off
-#define NR_OF_THREADS	4			//Comment out for max threads
-#define NR_OF_ENTITIES	100000
+#define NR_OF_THREADS	8			//Comment out for max threads
+#define NR_OF_ENTITIES	50000
 
 // Benchmarking
 #define BENCH_DT
-#define CAPTURED_FRAMES_DT 1000 
+#define CAPTURED_FRAMES_DT 100000
 // ############# Tweakable values: End #############
 
 

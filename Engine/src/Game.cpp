@@ -19,9 +19,11 @@ void Game::Init()
     m_ecs.RegisterComponent(Renderable());
     m_ecs.RegisterComponent(Value());
     m_ecs.RegisterComponent(Tag());
+    m_ecs.RegisterComponent(Collider());
 
     m_playerEntity = m_ecs.CreateEntity();
     m_ecs.SetComponent(m_playerEntity, Renderable(sf::Color::Blue));
+    m_ecs.SetComponent(m_playerEntity, Transform(0.0f, 0.0f));
 
     for (int i = 1; i < MAX_ENTITIES; i++)
     {
@@ -38,6 +40,8 @@ void Game::Init()
             m_ecs.SetComponent(entity, Renderable(sf::Color::Green));
             m_ecs.SetComponent(entity, Transform(0.0f));
         }
+
+        m_ecs.SetComponent(entity, Collider(m_ecs.GetComponentArray<Renderable>().at(entity).shape.getRadius()));
     }
 }
 
@@ -45,7 +49,13 @@ void Game::Update(const float& dt)
 {
     Renderable& playerRend = m_ecs.GetComponentArray<Renderable>().at(m_playerEntity);
     Value& playerScore = m_ecs.GetComponentArray<Value>().at(m_playerEntity);
+    playerRend.shape.setRadius(static_cast<float>(playerScore.worth));
+
     Transform& transform = m_ecs.GetComponentArray<Transform>().at(m_playerEntity);
+    Collider& collider = m_ecs.GetComponentArray<Collider>().at(m_playerEntity);
+    collider.collider.width = playerScore.worth;
+    collider.collider.height = playerScore.worth;
+
 
     transform.velocity = { 0.0f, 0.0f };
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -69,43 +79,46 @@ void Game::Update(const float& dt)
     transform.position.x += transform.velocity.x * dt;
     transform.position.y += transform.velocity.y * dt;
     transform.velocity = { 0.0f, 0.0f };
-    playerRend.shape.setPosition(transform.position);
+    //playerRend.shape.setPosition(transform.position);
 
 
 #if MULTITHREADING
-    m_ecs.ForEach_mult<Transform>([&](Entity& entity, Transform& transform)
+    m_ecs.ForEach_mult<Transform, Collider>([&](Entity& entity, Transform& transform, Collider& collider)
 #else
-    m_ecs.ForEach<Transform>([&](Entity& entity, Transform& transform)
+    m_ecs.ForEach<Transform, Collider>([&](Entity& entity, Transform& transform, Collider& collider)
 #endif
         {
             transform.position.x += transform.velocity.x * dt;
             transform.position.y += transform.velocity.y * dt;
+
+            collider.collider.left = transform.position.x;
+            collider.collider.top = transform.position.y;
         }
     );
 
 
 #if MULTITHREADING
-    m_ecs.ForEach_mult<Renderable, Tag>([&](Entity& entity, Renderable& rend, Tag& tag)
+    m_ecs.ForEach_mult<Collider, Tag>([&](Entity& entity, Collider& rend, Tag& tag)
 #else
-    m_ecs.ForEach<Renderable, Tag>([&](Entity& entity, Renderable& rend, Tag& tag)
+    m_ecs.ForEach<Collider, Tag>([&](Entity& entity, Collider& rend, Tag& tag)
 #endif
         {
-            if (rend.shouldRender == 1)
+            if (rend.canCollide == 1)
             {
-                if (IsColliding(rend.shape, playerRend.shape))
+                if (IsColliding(rend.collider, collider.collider))
                 {
                     switch (tag.tag)
                     {
                     case Tags::GOOD:
                     {
                         playerScore.worth++;
-                        rend.shouldRender = 0;
+                        rend.canCollide = 0;
                         break;
                     }
                     case Tags::BAD:
                     {
                         playerScore.worth--;
-                        rend.shouldRender = 0;
+                        rend.canCollide = 0;
                         break;
                     }
                     default:
@@ -115,7 +128,6 @@ void Game::Update(const float& dt)
                     if (playerScore.worth < 1)
                         playerScore.worth = 1;
 
-                    playerRend.shape.setRadius(static_cast<float>(playerScore.worth));
                 }
             }
         });
@@ -127,30 +139,18 @@ void Game::Update(const float& dt)
 void Game::Draw()
 {
     SFMLTon::GetWindow().clear();
-    m_ecs.ForEach<Renderable, Transform>([&](Entity entity, Renderable& rend, Transform& transform)
+    m_ecs.ForEach<Renderable, Transform, Collider>([&](Entity entity, Renderable& rend, Transform& transform, Collider& coll)
         {
             rend.shape.setPosition(transform.position);
 
-            if(rend.shouldRender)
+            if(coll.canCollide)
                 SFMLTon::GetWindow().draw(rend.shape);
         });
     SFMLTon::GetWindow().display();
 }
-bool Game::IsColliding(const sf::CircleShape& first, const sf::CircleShape& second)
+bool Game::IsColliding(const sf::FloatRect& first, const sf::FloatRect& second)
 {
-    const vec2& pos1 = first.getPosition() + vec2(first.getRadius(), first.getRadius());
-    const vec2& pos2 = second.getPosition() + vec2(second.getRadius(), second.getRadius());
-
-    float xdist = pos2.x - pos1.x;
-    float ydist = pos2.y - pos1.y;
-    float distance = std::sqrt(xdist * xdist + ydist * ydist);
-
-    if (distance < first.getRadius() + second.getRadius())
-    {
-        return true;
-    }
-
-    return false;
+    return first.intersects(second);
 }
 #endif
 

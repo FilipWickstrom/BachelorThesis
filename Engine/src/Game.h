@@ -17,7 +17,7 @@ public:
 	void Init();
 	void Update(const float& dt);
 	void Draw();
-	bool IsColliding(const sf::CircleShape& first, const sf::CircleShape& second);
+	bool IsColliding(const sf::FloatRect& first, const sf::FloatRect& second);
 };
 #endif
 
