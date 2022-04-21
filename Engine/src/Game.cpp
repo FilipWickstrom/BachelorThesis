@@ -202,13 +202,7 @@ void Game::Update(const float& dt)
     {
         // Move the object.
         m_objects[i]->Move(dt);
-    }
 
-#if MULTITHREADING
-    #pragma omp parallel for schedule(static)
-#endif
-    for (int i = 1; i < (int)m_objects.size(); i++)
-    {
         if (m_player.IsColliding(*m_objects[i]))
         {
             switch (m_objects[i]->GetTag())
@@ -232,6 +226,14 @@ void Game::Update(const float& dt)
             m_player.UpdateScale();
         }
     }
+
+//#if MULTITHREADING
+//    #pragma omp parallel for schedule(static)
+//#endif
+//    for (int i = 1; i < (int)m_objects.size(); i++)
+//    {
+//        
+//    }
 
 
     vec2 center = { m_player.GetPosition().x + m_player.GetScale().x, m_player.GetPosition().y + m_player.GetScale().y };
