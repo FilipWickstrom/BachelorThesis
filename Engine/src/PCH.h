@@ -42,12 +42,12 @@ typedef sf::Vector2f vec2;
 
 //#define OOD
 #define DOD
-#define MULTITHREADING 0	//On or off
+#define MULTITHREADING 1	//On or off
 
 // ECS
 using Entity = std::uint32_t;
 
-const Entity MAX_ENTITIES = 100000;
+const Entity MAX_ENTITIES = 50000;
 
 template<typename T>
 using CompArray = std::array<T, MAX_ENTITIES>;
@@ -60,4 +60,4 @@ const uint WINDOW_HEIGHT = 1080;
 
 // Benchmarking
 #define BENCH_DT 1
-#define CAPTURED_FRAMES_DT 1000 
+#define CAPTURED_FRAMES_DT 100000 

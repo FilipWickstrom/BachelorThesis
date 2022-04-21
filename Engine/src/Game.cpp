@@ -121,7 +121,7 @@ void Game::Update(const float& dt)
             }
         });
 
-    SFMLTon::GetView().setCenter(playerRend.shape.getPosition());
+    SFMLTon::GetView().setCenter(playerRend.shape.getPosition() + vec2(playerRend.shape.getRadius(), playerRend.shape.getRadius()));
     SFMLTon::GetWindow().setView(SFMLTon::GetView());
 }
 
@@ -139,8 +139,8 @@ void Game::Draw()
 }
 bool Game::IsColliding(const sf::CircleShape& first, const sf::CircleShape& second)
 {
-    const vec2& pos1 = first.getPosition();
-    const vec2& pos2 = second.getPosition();
+    const vec2& pos1 = first.getPosition() + vec2(first.getRadius(), first.getRadius());
+    const vec2& pos2 = second.getPosition() + vec2(second.getRadius(), second.getRadius());
 
     float xdist = pos2.x - pos1.x;
     float ydist = pos2.y - pos1.y;
