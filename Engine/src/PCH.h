@@ -58,7 +58,7 @@ typedef sf::Vector2f vec2;
 // ECS
 using Entity = std::uint32_t;
 
-const Entity MAX_ENTITIES = 100000;
+const Entity MAX_ENTITIES = NR_OF_ENTITIES;
 
 template<typename T>
 using CompArray = std::array<T, MAX_ENTITIES>;
