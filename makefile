@@ -6,8 +6,8 @@ CXX 		= g++
 #CXXFLAGS 	= -g -Wall -std=c++17
 
 #Release
-#	-o2 	: optimizing with compiler
-CXXFLAGS 	= -std=c++17 -o2
+#	-O2 	: optimizing with compiler
+CXXFLAGS 	= -std=c++17 -O2
 
 SOURCEPATH = Engine/src
 SOURCE 	:= $(wildcard $(SOURCEPATH)/*.cpp)

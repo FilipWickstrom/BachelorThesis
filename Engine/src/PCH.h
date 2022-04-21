@@ -16,6 +16,7 @@
 #include <bitset>
 #include <cassert>
 #include <functional>
+#include <cmath>
 // Add more if needed
 
 
@@ -32,32 +33,35 @@
 #include <SFML/GpuPreference.hpp>
 
 
-// Singletons if needed
+// Singleton
 #include "SFMLTon.h"
+
+
+// ############# Tweakable values: Start #############
+//#define OOD
+#define DOD
+#define MULTITHREADING	1			//On or off
+#define NR_OF_THREADS	4			//Comment out for max threads
+#define NR_OF_ENTITIES	100000
+
+// Benchmarking
+#define BENCH_DT
+#define CAPTURED_FRAMES_DT 1000 
+// ############# Tweakable values: End #############
+
 
 
 // type defs
 typedef unsigned int uint;
 typedef sf::Vector2f vec2;
 
-//#define OOD
-#define DOD
-#define MULTITHREADING 0	//On or off
-
 // ECS
 using Entity = std::uint32_t;
-
-const Entity MAX_ENTITIES = 100000;
-
+const Entity MAX_ENTITIES = NR_OF_ENTITIES;
 template<typename T>
 using CompArray = std::array<T, MAX_ENTITIES>;
 
-const uint MAX_OBJECTS = MAX_ENTITIES;
+const uint MAX_OBJECTS = NR_OF_ENTITIES;
 
 const uint WINDOW_WIDTH = 1920;
 const uint WINDOW_HEIGHT = 1080;
-
-
-// Benchmarking
-#define BENCH_DT 1
-#define CAPTURED_FRAMES_DT 1000 
