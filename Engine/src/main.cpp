@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "Game.h"
 
-#if BENCH_DT
+#ifdef BENCH_DT
 #include "Benchmark.h"
 #endif 
 
@@ -9,10 +9,14 @@ int main()
 {
     srand(static_cast<uint>(time(nullptr)));
 
+#ifdef NR_OF_THREADS
+    omp_set_num_threads(NR_OF_THREADS);
+#endif
+
     Game game;
     game.Init();
 
-#if BENCH_DT
+#ifdef BENCH_DT
     Benchmark benchmark;
 #endif
 
@@ -23,7 +27,7 @@ int main()
         float dt = start.getElapsedTime().asSeconds();
         start.restart();
 
-#if BENCH_DT
+#ifdef BENCH_DT
         benchmark.AddDT(dt);
 #endif
 
