@@ -40,7 +40,9 @@ int main()
 
         game.Update(dt);
 
-        //game.Draw();
+#if DRAW_GAME
+        game.Draw();
+#endif
     }
 
     SFMLTon::GetWindow().close();

@@ -17,7 +17,8 @@ public:
 	void Init();
 	void Update(const float& dt);
 	void Draw();
-	bool IsColliding(const sf::FloatRect& first, const sf::FloatRect& second);
+	bool IsColliding(const vec2& pos1, const vec2& pos2,
+					 const float& rad1, const float& rad2);
 };
 #endif
 
@@ -29,7 +30,7 @@ class Game
 {
 private:
 
-	PlayerObject m_player;
+	PlayerObject* m_player;
 	std::vector<RenderObject*> m_objects;
 
 public:

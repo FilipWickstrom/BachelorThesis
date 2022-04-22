@@ -4,7 +4,7 @@
 
 struct Transform
 {
-	vec2 position = {static_cast<float>(rand() % 10000 - 5000), static_cast<float>(rand() % 10000 - 5000) };
+	vec2 position = { static_cast<float>(rand() % 10000 - 5000), static_cast<float>(rand() % 10000 - 5000) };
 	vec2 velocity = { static_cast<float>(rand() % 32 - 16), static_cast<float>(rand() % 32 - 16) };
 
 	Transform() = default;
@@ -28,6 +28,7 @@ enum class Tags : uint8_t
 	PLAYER,
 	BAD
 };
+
 struct Tag
 {
 	Tags tag = Tags::DEFAULT;
@@ -41,28 +42,19 @@ struct Tag
 struct Collider
 {
 	uint8_t canCollide = 1;
-	sf::FloatRect collider;
+	float radius = 0.f;
+	vec2 position = { 0.f, 0.f };
 
-	Collider()
+	Collider() = default;
+	Collider(const float& rad)
 	{
-		collider.height = 0;
-		collider.left = 0;
-		collider.top = 0;
-		collider.width = 0;
-	}
-
-	Collider(float radius)
-	{
-		collider.height = radius;
-		collider.left = 0;
-		collider.top = 0;
-		collider.width = radius;
+		radius = std::abs(rad);
 	}
 };
 
 struct Value
 {
-	uint worth = 1;
+	uint worth = 0;
 };
 
 struct Renderable
@@ -71,12 +63,12 @@ struct Renderable
 	sf::CircleShape shape;
 	Renderable()
 	{
-		shape.setRadius(12.5f);
+		shape.setRadius(10.f);
 		shape.setFillColor(sf::Color::White);
 	}
-	Renderable(const sf::Color& color)
+	Renderable(const sf::Color& color, const float& radius)
 	{
-		shape.setRadius(12.5f);
+		shape.setRadius(radius);
 		shape.setFillColor(color);
 	}
 };

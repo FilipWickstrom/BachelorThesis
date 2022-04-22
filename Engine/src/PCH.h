@@ -40,9 +40,10 @@
 // ############# Tweakable values: Start #############
 //#define OOD
 #define DOD
-#define MULTITHREADING	0			//On or off
-#define NR_OF_THREADS	8			//Comment out for max threads
-#define NR_OF_ENTITIES	5000
+#define MULTITHREADING	1			//On or off
+//#define NR_OF_THREADS	16			//Comment out for max threads
+#define NR_OF_ENTITIES	100000
+#define DRAW_GAME		0
 
 // Benchmarking
 #define BENCH_DT
