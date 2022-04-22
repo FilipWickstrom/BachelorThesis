@@ -9,7 +9,7 @@ private:
 	
 public:
 	Benchmark();
-	~Benchmark() = default;
+	~Benchmark();
 
 	void AddDT(const float& value);
 	float GetAverageDT();

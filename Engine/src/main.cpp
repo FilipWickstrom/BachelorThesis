@@ -1,5 +1,5 @@
 #include "PCH.h"
-#if BENCH_DT
+#ifdef BENCH_DT
 #include "Benchmark.h"
 #endif 
 
@@ -20,7 +20,7 @@ int main()
     GameDOD game;
 #endif
 
-#if BENCH_DT
+#ifdef BENCH_DT
     Benchmark benchmark;
 #endif
 
@@ -30,7 +30,7 @@ int main()
         float dt = clock.getElapsedTime().asSeconds();
         clock.restart();
 
-#if BENCH_DT
+#ifdef BENCH_DT
         benchmark.AddDT(dt);
 #endif
 
@@ -42,14 +42,10 @@ int main()
         }
 
         game.Update(dt);
+#if DRAW_GAME
         game.Render();
-    }
-
-#if BENCH_DT
-    float averageDT = benchmark.GetAverageDT();
-    std::cout << "Average DT: " << averageDT << std::endl;
-    std::cout << "Average FPS: " << 1.f / averageDT << std::endl;
 #endif
+    }
 
     WINDOW.close();
     return 0;

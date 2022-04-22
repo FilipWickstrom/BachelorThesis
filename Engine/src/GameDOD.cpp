@@ -160,8 +160,9 @@ void GameDOD::Update(const float& dt)
 				}
 				m_registry.remove<comp::CircleShape>(entity);
 
-
+#if DRAW_GAME
 				WINDOW.setTitle("Points: " + std::to_string(playerScore.current));
+#endif
 				playerShape.shape.setRadius(playerScore.current + 10.f);
 				playerCollider.radius = playerScore.current + 10.f;
 				playerShape.shape.setOrigin(playerShape.shape.getLocalBounds().width / 2.f,

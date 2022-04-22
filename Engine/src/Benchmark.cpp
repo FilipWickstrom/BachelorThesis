@@ -7,11 +7,21 @@ Benchmark::Benchmark()
 	m_arrayFull = false;
 }
 
+Benchmark::~Benchmark()
+{
+	float averageDT = GetAverageDT();
+	std::string avgDT_str = std::to_string(averageDT);
+	std::string avgFPS_str = std::to_string(static_cast<int>(1.f / averageDT));
+	std::replace(avgDT_str.begin(), avgDT_str.end(), '.', ',');
+	std::cout << "Average DT: " << avgDT_str << std::endl;
+	std::cout << "Average FPS: " << avgFPS_str << std::endl;
+}
+
 void Benchmark::AddDT(const float& value)
 {
 	if (m_arrayIndex + 1 == CAPTURED_FRAMES_DT)
 		m_arrayFull = true;
-	
+
 	m_deltatimes[m_arrayIndex] = value;
 	m_arrayIndex = (m_arrayIndex + 1) % CAPTURED_FRAMES_DT;
 }
