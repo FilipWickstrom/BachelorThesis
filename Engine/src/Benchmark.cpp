@@ -10,8 +10,12 @@ Benchmark::Benchmark()
 Benchmark::~Benchmark()
 {
 	float averageDT = GetAverageDT();
-	std::cout << "Average DT: " << averageDT << std::endl;
-	std::cout << "Average FPS: " << 1.f / averageDT << std::endl;
+	std::string avgDT_str = std::to_string(averageDT);
+	std::string avgFPS_str = std::to_string(1.f / averageDT);
+	std::replace(avgDT_str.begin(), avgDT_str.end(), '.', ',');
+	std::replace(avgFPS_str.begin(), avgFPS_str.end(), '.', ',');
+	std::cout << "Average DT: " << avgDT_str << std::endl;
+	std::cout << "Average FPS: " << avgFPS_str << std::endl;
 }
 
 void Benchmark::AddDT(const float& value)
