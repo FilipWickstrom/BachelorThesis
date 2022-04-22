@@ -22,8 +22,7 @@ public:
 	template<typename T>
 	void SetComponent(const Entity& entity, const T& component)
 	{
-		size_t type = typeid(T).hash_code();
-
+		//size_t type = typeid(T).hash_code();
 		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component isn't reigstered.");
 
 		auto& compArr = this->GetComponentArray<T>();
@@ -57,7 +56,7 @@ public:
 	void ForEach(F func)
 	{
 		// Assert that component actually exists.
-		size_t type = typeid(A).hash_code();
+		//size_t type = typeid(A).hash_code();
 		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
@@ -74,7 +73,7 @@ public:
 	void ForEach(F func)
 	{
 		// Assert that component actually exists.
-		size_t type = typeid(A).hash_code();
+		//size_t type = typeid(A).hash_code();
 		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
@@ -92,7 +91,7 @@ public:
 	void ForEach(F func)
 	{
 		// Assert that component actually exists.
-		size_t type = typeid(A).hash_code();
+		//size_t type = typeid(A).hash_code();
 		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
@@ -111,7 +110,7 @@ public:
 	void ForEach_mult(F func)
 	{
 		// Assert that component actually exists.
-		size_t type = typeid(A).hash_code();
+		//size_t type = typeid(A).hash_code();
 		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
@@ -133,7 +132,7 @@ public:
 	void ForEach_mult(F func)
 	{
 		// Assert that component actually exists.
-		size_t type = typeid(A).hash_code();
+		//size_t type = typeid(A).hash_code();
 		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.
@@ -156,7 +155,7 @@ public:
 	void ForEach_mult(F func)
 	{
 		// Assert that component actually exists.
-		size_t type = typeid(A).hash_code();
+		//size_t type = typeid(A).hash_code();
 		//assert(m_componentArrays.find(type) == m_componentArrays.end() && "Component doesn't exist");
 
 		// Get component array.

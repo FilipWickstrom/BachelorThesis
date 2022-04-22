@@ -4,9 +4,7 @@
 SFMLTon::SFMLTon()
 {
 	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Test environment");
-	//m_view.setViewport({ 1.0f, 1.0f, 1.0f, 1.0f });
 	m_view.setSize({ WINDOW_WIDTH, WINDOW_HEIGHT });
-	//m_window.setView(m_view);
 }
 
 auto& SFMLTon::Get()
