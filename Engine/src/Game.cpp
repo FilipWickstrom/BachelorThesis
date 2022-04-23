@@ -77,6 +77,22 @@ void Game::Update(const float& dt)
     playerTransform.position.y += playerTransform.velocity.y * dt;
     playerTransform.velocity = { 0.0f, 0.0f };
 
+    // Use this loop instead to include Renderable.
+
+//#if MULTITHREADING
+//    m_ecs.ForEach_mult<Transform, Renderable, Collider>([&](Entity& entity, Transform& transform, Renderable& rend, Collider& collider)
+//#else
+//    m_ecs.ForEach<Transform, Renderable, Collider>([&](Entity& entity, Transform& transform, Renderable& rend, Collider& collider)
+//#endif
+//        {
+//            transform.position.x += transform.velocity.x * dt;
+//            transform.position.y += transform.velocity.y * dt;
+//            rend.shape.setPosition(transform.position);
+//            collider.position.x = transform.position.x + collider.radius;
+//            collider.position.y = transform.position.y + collider.radius;
+//        }
+//    );
+
 
 #if MULTITHREADING
     m_ecs.ForEach_mult<Transform, Collider>([&](Entity& entity, Transform& transform, Collider& collider)
