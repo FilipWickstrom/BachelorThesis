@@ -3,9 +3,9 @@
 class GameObject
 {
 protected:
-	ETagType					m_tag;
-	std::unique_ptr<sf::Shape>	m_shape;
-	float						m_collisionRadius;
+	ETagType		m_tag;
+	sf::CircleShape	m_shape;
+	float			m_collisionRadius;
 
 public:
 	GameObject();

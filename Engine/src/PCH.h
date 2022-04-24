@@ -52,9 +52,7 @@ typedef sf::Vector2f vec2;
 // ############# Tweakable values: Start #############
 //#define OOD
 #define DOD
-//#define MULTITHREADING	1		//On or off
-//#define NR_OF_THREADS	16			//Comment out for max threads
-#define NR_OF_ENTITIES	100000
+#define NR_OF_ENTITIES	5000
 #define DRAW_GAME		0
 
 // Benchmarking
@@ -76,5 +74,5 @@ constexpr uint	NR_OF_ENEMIES	= NR_OF_ENTITIES / 2;
 constexpr uint	NR_OF_FOOD		= NR_OF_ENTITIES / 2;
 constexpr float SPAWNDENSITY	= 10.f;	//1 = everything fits within the window, 
 										//3 = 3 times the window size
-constexpr uint  GOALPOINTS		= 50;
+constexpr uint  GOALPOINTS		= 100;
 constexpr float PLAYERSPEED		= 250.f;

@@ -15,14 +15,14 @@ GameObject::GameObject(const ETagType& type)
 
 bool GameObject::IsColliding(const GameObject& obj) const
 {
-	vec2 pos1 = m_shape->getPosition();
+	vec2 pos1 = m_shape.getPosition();
 	vec2 pos2 = obj.GetPosition();
 	
 	float xdist = pos2.x - pos1.x;
 	float ydist = pos2.y - pos1.y;
 	float distance = std::sqrt(xdist * xdist + ydist * ydist);
 
-	if (distance < this->GetCollisionRadius() + obj.GetCollisionRadius())
+	if (distance < m_collisionRadius + obj.GetCollisionRadius())
 		return true;
 
 	return false;
@@ -30,8 +30,7 @@ bool GameObject::IsColliding(const GameObject& obj) const
 
 void GameObject::SetPosition(const vec2& pos)
 {
-	if (!m_shape) return;
-	m_shape->setPosition(pos);
+	m_shape.setPosition(pos);
 }
 
 void GameObject::SetTag(const ETagType& tag)
@@ -46,7 +45,7 @@ void GameObject::SetCollisionRadius(const float& rad)
 
 const vec2& GameObject::GetPosition() const
 {
-	return m_shape->getPosition();
+	return m_shape.getPosition();
 }
 
 const ETagType& GameObject::GetTag() const

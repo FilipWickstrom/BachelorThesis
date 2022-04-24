@@ -4,7 +4,6 @@
 class EnemyObject : public GameObject
 {
 private:
-	float	m_movementSpeed;
 	vec2	m_velocity;
 
 public:

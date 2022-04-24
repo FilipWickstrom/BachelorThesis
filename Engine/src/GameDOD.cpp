@@ -78,6 +78,7 @@ void GameDOD::Update(const float& dt)
 	auto& playerShape		= m_registry.get<comp::CircleShape>(m_playerEnt);
 	auto& playerScore		= m_registry.get<comp::Score>(m_playerEnt);
 	auto& playerCollider	= m_registry.get<comp::Collider>(m_playerEnt);
+	bool  playerHasCollided = false;
 
 	/*
 		Update player movement
@@ -105,46 +106,36 @@ void GameDOD::Update(const float& dt)
 
 
 	/*
-		Update every other entities position and check collision with player
+		Updates every entity's position and checks collision
 	*/
-	//Avoids the player by execluding score
-	const auto& view = m_registry.view<comp::CircleShape, comp::Transform, comp::Tag, comp::Collider>(entt::exclude<comp::Score>);
-	for (const auto& entity : view)
+	const auto& group = m_registry.group<comp::Transform, const comp::Tag, const comp::Collider>();
+	for (const auto& entity : group)
 	{
-		auto& entPos		= m_registry.get<comp::Transform>(entity);
-		auto& entShape		= m_registry.get<comp::CircleShape>(entity);
-		auto& entTag		= m_registry.get<comp::Tag>(entity);
-		auto& entCollider	= m_registry.get<comp::Collider>(entity);
-
+		auto [entPos, entCollider] = group.get<comp::Transform, const comp::Collider>(entity);
+		
 		//Move the entity
 		entPos.position += { entPos.velocity.x * dt,
 							 entPos.velocity.y * dt };
-		entShape.shape.setPosition(entPos.position);
-
-
+		
 		//Check collision
-		//if (playerShape.shape.getGlobalBounds().intersects(entShape.shape.getGlobalBounds()))					//Expensive
-		if (CheckCollision(playerTrans.position, entPos.position, playerCollider.radius, entCollider.radius))	//Cheaper
+		if (CheckCollision(playerTrans.position, entPos.position, playerCollider.radius, entCollider.radius))
 		{
+			const auto& entTag = group.get<const comp::Tag>(entity);
 			switch (entTag.type)
 			{
 			case ETagType::enemy:
 			{
+				playerHasCollided = true;
 				playerScore.current = 0;
-				WINDOW.setTitle("Points: " + std::to_string(playerScore.current));
-				playerShape.shape.setRadius(playerScore.current + 10.f);
-				playerCollider.radius = playerScore.current + 10.f;
-				playerShape.shape.setOrigin(playerShape.shape.getLocalBounds().width / 2.f,
-											playerShape.shape.getLocalBounds().height / 2.f);
 				break;
 			}
 			case ETagType::goodfood:
 			case ETagType::badfood:
 			{
-				auto worth = m_registry.try_get<comp::Worth>(entity);
-				if (!worth) return;
+				playerHasCollided = true;
+				const auto& worth = m_registry.get<comp::Worth>(entity);
 
-				playerScore.current += worth->points;
+				playerScore.current += worth.points;
 				if (playerScore.current < 0) 
 				{
 					playerScore.current = 0;
@@ -153,21 +144,15 @@ void GameDOD::Update(const float& dt)
 				{
 					if (playerScore.current >= playerScore.max)
 					{
+#if DRAW_GAME
 						WINDOW.setTitle("You win the game!");
+#endif
 						m_gameOver = true;
 						return;
 					}
 				}
-				m_registry.remove<comp::CircleShape>(entity);
-
-#if DRAW_GAME
-				WINDOW.setTitle("Points: " + std::to_string(playerScore.current));
-#endif
-				playerShape.shape.setRadius(playerScore.current + 10.f);
-				playerCollider.radius = playerScore.current + 10.f;
-				playerShape.shape.setOrigin(playerShape.shape.getLocalBounds().width / 2.f,
-											playerShape.shape.getLocalBounds().height / 2.f);
-
+				//Remove components from the food entity
+				m_registry.erase<comp::Collider, comp::CircleShape, comp::Transform, comp::Tag>(entity);
 				break;
 			}
 			default:
@@ -175,16 +160,30 @@ void GameDOD::Update(const float& dt)
 			}
 		}
 	}
+
+	if (playerHasCollided)
+	{
+		playerCollider.radius = playerScore.current + 10.f;
+		playerShape.shape.setRadius(playerCollider.radius);
+		playerShape.shape.setOrigin(playerShape.shape.getLocalBounds().width / 2.f,
+									playerShape.shape.getLocalBounds().height / 2.f);
+#if DRAW_GAME
+		WINDOW.setTitle("Points: " + std::to_string(playerScore.current));
+#endif
+	}
 }
 
 void GameDOD::Render()
 {
 	WINDOW.clear();
 
-	const auto& view = m_registry.view<comp::CircleShape>();
-	for (const auto& entity : view)
+	const auto& group = m_registry.group<comp::CircleShape, comp::Transform>();
+	for (const auto& entity : group)
 	{
-		const auto& circleshape = m_registry.get<comp::CircleShape>(entity);
+		auto& circleshape		= group.get<comp::CircleShape>(entity);
+		const auto& transform	= group.get<comp::Transform>(entity);
+		circleshape.shape.setPosition(transform.position);
+
 		WINDOW.draw(circleshape.shape);
 	}
 

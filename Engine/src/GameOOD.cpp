@@ -33,10 +33,6 @@ void GameOOD::Update(const float& dt)
 {
 	if (m_gameOver) return;
 
-	//Update positions on every object
-	for (auto& obj : m_gameobjects)
-		obj->Update(dt);
-
 	PlayerObject* playerObj = dynamic_cast<PlayerObject*>(m_gameobjects.at(m_playerID).get());
 
 	// Collision check
@@ -45,6 +41,8 @@ void GameOOD::Update(const float& dt)
 		GameObject* currentObj = m_gameobjects.at(i).get();
 		//Safety check
 		if (!currentObj) return;
+
+		currentObj->Update(dt);
 
 		if (playerObj->IsColliding(*currentObj))
 		{
@@ -65,7 +63,9 @@ void GameOOD::Update(const float& dt)
 				//Check winconditions for players
 				if (playerObj->CheckWinCondition())
 				{
+#if DRAW_GAME
 					WINDOW.setTitle("You win the game!");
+#endif
 					m_gameOver = true;
 				}
 
