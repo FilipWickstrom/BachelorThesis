@@ -3,11 +3,11 @@ CXX 		= g++
 #Debug
 #	-g 		: tells compiler to save debugging information
 # 	-Wall	: shows all warnings
-#CXXFLAGS 	= -g -Wall -std=c++20
+#CXXFLAGS 	= -g -Wall -std=c++2a
 
 #Release
 #	-o2 	: optimizing with compiler
-CXXFLAGS 	= -std=c++20 -o2
+CXXFLAGS 	= -std=c++2a -O2
 
 SOURCEPATH = Engine/src
 SOURCE 	:= $(wildcard $(SOURCEPATH)/*.cpp)
