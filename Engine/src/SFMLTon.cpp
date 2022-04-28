@@ -3,7 +3,12 @@
 
 SFMLTon::SFMLTon()
 {
+#if DRAW_GAME
+	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Points: 0");
+#else
 	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Test environment");
+#endif
+
 	m_view.setSize({ WINDOW_WIDTH, WINDOW_HEIGHT });
 }
 

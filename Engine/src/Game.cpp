@@ -108,6 +108,7 @@ void Game::Update(const float& dt)
         }
     );
 
+    bool hasCollided = false;
 
 #if MULTITHREADING
     m_ecs.ForEach_mult<Tag, Collider>([&](Entity& entity, Tag& tag, Collider& collider)
@@ -127,12 +128,14 @@ void Game::Update(const float& dt)
                     {
                     case Tags::GOOD:
                     {
+                        hasCollided = true;
                         playerScore.worth++;
                         collider.canCollide = 0;
                         break;
                     }
                     case Tags::BAD:
                     {
+                        hasCollided = true;
                         //Score is anything but 0
                         if (playerScore.worth)
                             playerScore.worth--;
@@ -142,15 +145,20 @@ void Game::Update(const float& dt)
                     default:
                         break;
                     }
-
-                    float rad = playerScore.worth + 10.f;   //10.f is default size of player
-                    playerRend.shape.setRadius(rad);
-                    playerCollider.radius = rad;
-                    //SFMLTon::GetWindow().setTitle("Points: " + std::to_string(playerScore.worth));
                 }
             }
         });
 
+    //Update player and window
+    if (hasCollided)
+    {
+        float rad = playerScore.worth + 10.f;   //10.f is default size of player
+        playerRend.shape.setRadius(rad);
+        playerCollider.radius = rad;
+#if DRAW_GAME
+        SFMLTon::GetWindow().setTitle("Points: " + std::to_string(playerScore.worth));
+#endif
+    }
 
     SFMLTon::GetView().setCenter(playerTransform.position + vec2(playerCollider.radius, playerCollider.radius));
     SFMLTon::GetWindow().setView(SFMLTon::GetView());
