@@ -40,9 +40,9 @@
 // ############# Tweakable values: Start #############
 //#define OOD
 #define DOD
-#define MULTITHREADING	1			//On or off
+#define MULTITHREADING	0			//On or off
 //#define NR_OF_THREADS	16			//Comment out for max threads
-#define NR_OF_ENTITIES	100000
+#define NR_OF_ENTITIES	5000
 #define DRAW_GAME		0
 
 // Benchmarking
@@ -66,5 +66,5 @@ using CompArray = std::array<T, MAX_ENTITIES>;
 
 const uint MAX_OBJECTS = NR_OF_ENTITIES;
 
-const uint WINDOW_WIDTH = 1920;
-const uint WINDOW_HEIGHT = 1080;
+const uint WINDOW_WIDTH = 150;
+const uint WINDOW_HEIGHT = 150;
