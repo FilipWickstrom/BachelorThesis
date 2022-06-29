@@ -23,7 +23,7 @@ If the program is not compiling you might need to download SFML and the command 
 You can play around with different values in the "PCH.h" files for the games to see the differences between the two design patterns.
 
 
-# Final thesis
+# Thesis
 https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1676868&dswid=-1403
 
 ## Visualization of the games
