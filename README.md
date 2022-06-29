@@ -26,6 +26,31 @@ You can play around with different values in the "PCH.h" files for the games to 
 # Final thesis
 https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1676868&dswid=-1403
 
+## Visualization of the games
+<img src="https://github.com/FilipWickstrom/BachelorThesis/blob/main/Images/Game1.PNG" width="500">    <img src="https://github.com/FilipWickstrom/BachelorThesis/blob/main/Images/Game2.PNG" width="500">
+
+## Specifications
+|  System Under Test| 2                 | 5                       |
+| ----------------- |:-----------------:|:-----------------------:|
+| CPU name          | i7-8750h          | i7-8750h                |
+| CPU speed (GHz)   | 4                 | 4                       |
+| Cores             | 6                 | 6                       |
+| Threads           | 12                | 12                      |
+| Ram size (GB)     | 16                | 16                      |
+| Ram speed (MHz)   | 2667              | 2667                    |
+| OS                | Windows 10 (21H2) | Linux Ubuntu (20.04.4)  |
+
+## Execution times
+<img src="https://github.com/FilipWickstrom/BachelorThesis/blob/main/Images/ET_Game1_SUT2.png" width="500">   <img src="https://github.com/FilipWickstrom/BachelorThesis/blob/main/Images/ET_Game2_SUT2.png" width="500">
+
+
+## L1 cache misses
+<img src="https://github.com/FilipWickstrom/BachelorThesis/blob/main/Images/L1_Game1_SUT5.png" width="500">   <img src="https://github.com/FilipWickstrom/BachelorThesis/blob/main/Images/L1_Game2_SUT5.png" width="500">
+
+
+## L3 cache misses
+<img src="https://github.com/FilipWickstrom/BachelorThesis/blob/main/Images/L3_Game1_SUT5.png" width="500">   <img src="https://github.com/FilipWickstrom/BachelorThesis/blob/main/Images/L3_Game2_SUT5.png" width="500">
+
 
 # Libraries used
 * [SFML](https://www.sfml-dev.org/)
