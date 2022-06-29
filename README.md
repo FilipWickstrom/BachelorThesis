@@ -25,3 +25,8 @@ You can play around with different values in the "PCH.h" files for the games to 
 
 # Final thesis
 https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1676868&dswid=-1403
+
+# Libraries used
+* [SFML](https://www.sfml-dev.org/)
+* [OpenMP](https://www.openmp.org/)
+* [EnTT](https://github.com/skypjack/entt)
